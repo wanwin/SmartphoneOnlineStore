@@ -1,9 +1,3 @@
-<%-- 
-    Document   : products
-    Created on : 09-mar-2016, 0:33:52
-    Author     : evelin
---%>
-
 <%@page import="entity.Product"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
