@@ -10,7 +10,7 @@
         <title>Movilazos.es</title>
     </head>
     <body>
-        <nav class="navbar navbar-default     navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle"     data-toggle="collapse"  data-target="#myNavbar">
@@ -24,7 +24,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.jsp">INICIO</a></li>
-                        <li><form action="FrontControllerServlet"><input type="hidden" name="command" value="findProductCommand"><input id="transparentButton" type="submit" value="PRODUCTOS"></form></li>
+                        <li><form action="FrontControllerServlet"><input type="hidden" name="command" value="FindProductCommand"><input type="hidden" name="command" value="FindProductCommand"><input id="transparentButton" type="submit" value="PRODUCTOS"></form></li>
                         <li><a href="">CONTACTO</a></li>
                         <li><a href="">INICIAR SESIÓN</a></li>
                         <li><a href=""><img src="resources/img/carrito.png" 

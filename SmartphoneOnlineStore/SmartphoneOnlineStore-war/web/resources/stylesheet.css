@@ -4,10 +4,6 @@ p{
     color: white;
 }
 
-.bg1{
-    background-color: orange;
-}
-
 #transparentButton{
     background-color: Transparent;
     background-repeat:no-repeat;
@@ -16,5 +12,13 @@ p{
     overflow: hidden;
     outline:none;
     color: gray;
-    padding-top: 1.1em;
+    padding-top: 2em;
+}
+
+.bg1{
+    background-color: orange;
+}
+
+.navbar .navbar-nav > li > a {
+    line-height: 45px;
 }

@@ -1,6 +1,5 @@
 package frontController;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -15,9 +14,9 @@ public class FrontControllerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String command1 = "frontController." + request.getParameter("command");
+            String command = "frontController." + request.getParameter("command");
             try {
-                FrontCommand action1 = (FrontCommand) Class.forName(command1).newInstance();
+                FrontCommand action1 = (FrontCommand) Class.forName(command).newInstance();
                 action1.init(getServletContext(), request, response);
                 action1.process();
             } catch (InstantiationException | IllegalAccessException ex) {

@@ -4,6 +4,9 @@
     Author     : evelin
 --%>
 
+<%@page import="entity.Product"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@page import="javax.naming.InitialContext"%>
@@ -20,16 +23,16 @@
         <title>Movilazos.es</title>
     </head>
     <body>
-        <nav class="navbar navbar-default     navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle"     data-toggle="collapse"  data-target="#myNavbar">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="index.jsp">
-                        <img src="resources/img/logo_horizontal.png"></a>
+                        <img src="resources/img/logo_horizontal.png" class="img-responsive"></a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
@@ -43,37 +46,16 @@
                 </div>
             </div>
         </nav>
-        <div><form action="FrontControllerServlet">
-                <input type="hidden" value="Command2" name="command">
-                <input type="submit" value="Enviar Formulario1">
-        </form></div>
-            <div class="container-fluid     page-header">
-                <h1 style="font-family: fantasy">Productos</h1>
-                <sql:query var="result" dataSource="jdbc/sample">
-                    SELECT * FROM APP.PRODUCT
-                </sql:query>
-                <div class="table-responsive">          
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <c:forEach var="columnName" items="${result.columnNames}">
-                                    <th><c:out value="${columnName}"/></th>
-                                </c:forEach> 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="row" items="${result.rowsByIndex}">
-                            <tr>
-                                <c:forEach var="column" items="${row}">
-                                    <td><c:out value="${column}"/></td>
-                                </c:forEach>
-                            </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
+        <%
+            List<Product> products = (List<Product>)request.getAttribute("Products");
+            if (products != null){
+                out.println("<div class=\"container-fluid\">");
+                for (Product product: products){
+                    out.println("<p>ID: " + product.getProductId() + ", Description: " + product.getDescription() + "</p>");
+                }
+                out.println("</div>");
+            }
+        %>
         <footer class="container-fluid text-center">
             <p style="font-style: italic;color: #000;font-size: small">Copyright 2016 - Darwin Hamad y Evelin Rodrguez</p>
         </footer>
