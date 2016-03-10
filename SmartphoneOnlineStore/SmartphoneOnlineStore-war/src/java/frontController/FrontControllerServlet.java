@@ -1,7 +1,5 @@
 package frontController;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,20 +9,25 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/FrontControllerServlet"})
 public class FrontControllerServlet extends HttpServlet {
 
+    private static final String PACKAGE_NAME = "frontController.";
+    private static final String PARAMETER_NAME = "command";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String command = "frontController." + request.getParameter("command");
+            String commandPath = PACKAGE_NAME + request.getParameter(PARAMETER_NAME);
             try {
-                FrontCommand action1 = (FrontCommand) Class.forName(command).newInstance();
+                FrontCommand action1 = (FrontCommand) createCommandInstance(commandPath);
                 action1.init(getServletContext(), request, response);
                 action1.process();
             } catch (InstantiationException | IllegalAccessException ex) {
-                Logger.getLogger(FrontControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FrontControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private static Object createCommandInstance(String command) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        return Class.forName(command).newInstance();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

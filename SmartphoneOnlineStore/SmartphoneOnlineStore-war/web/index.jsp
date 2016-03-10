@@ -19,7 +19,8 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="index.jsp">
-                        <img src="resources/img/logo_horizontal.png" class="img-responsive"></a>
+                        <img src="resources/img/logo_horizontal.png" class="img-responsive">
+                    </a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">

@@ -37,7 +37,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.jsp">INICIO</a></li>
-                        <li><a href="products.jsp">PRODUCTOS</a></li>
+                        <li><form action="FrontControllerServlet"><input type="hidden" name="command" value="FindProductCommand"><input type="hidden" name="command" value="FindProductCommand"><input id="transparentButton" type="submit" value="PRODUCTOS"></form></li>
                         <li><a href="">CONTACTO</a></li>
                         <li><a href="">INICIAR SESIÓN</a></li>
                         <li><a href=""><img src="resources/img/carrito.png" 
@@ -59,7 +59,8 @@
                     out.println("<img class=\"img-responsive\" src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\">");
                     out.println("<p class=\"text-center\">" + product.getDescription() + "<br>" + product.getPurchaseCost()+ " €</p>");
                     out.println("<form action=\"FrontControllerServlet\">");
-                    out.println("<input type=\"hidden\" name=\"command\" value=\"AddToCart\">");
+                    out.println("<input type=\"hidden\" name=\"command\" value=\"AddToCartCommand\">");
+                    out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
                     out.println("<input class=\"btn btn-default center-block\" type=\"submit\" value=\"Añadir al carrito\">");
                     out.println("</form>");
                     out.println("</div>");

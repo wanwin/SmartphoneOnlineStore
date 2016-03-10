@@ -2,7 +2,6 @@ package frontController;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
