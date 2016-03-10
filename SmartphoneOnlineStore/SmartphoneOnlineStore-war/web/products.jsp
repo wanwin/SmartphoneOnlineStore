@@ -46,6 +46,7 @@
                 </div>
             </div>
         </nav>
+        <div w3-include-HTML="library/navbar.html"></div>
         <%
             List<Product> products = (List<Product>)request.getAttribute("Products");
             int numberOfProductsInThisRow = 0;

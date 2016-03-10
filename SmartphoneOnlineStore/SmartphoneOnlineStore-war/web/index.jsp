@@ -76,7 +76,12 @@
         <footer class="container-fluid text-center">
             <p style="font-style: italic;color: #000;font-size: small">Copyright 2016 - Darwin Hamad y Evelin Rodrguez</p>
         </footer>
+        <div w3-include-HTML="library/navbar.html"></div>
+        <div w3-include-HTML="library/carousel.html"></div>
+        <div w3-include-HTML="library/breadcrumb.html"></div>
+        <div w3-include-HTML="library/footer.html"></div>
         <script src="http://code.jquery.com/jquery.js"></script> 
         <script src="resources/js/bootstrap.js"></script>
+        <script src="resources/js/w3-include-HTML.js"></script>
     </body>
 </html>
