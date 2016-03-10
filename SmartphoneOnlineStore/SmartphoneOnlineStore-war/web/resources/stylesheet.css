@@ -1,7 +1,11 @@
+body {
+    padding-top: 75px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
 p{
-    font-size: 2em; 
+    font-size: 1em; 
     font-family: Helvetica;
-    color: white;
+    color: black;
 }
 
 #transparentButton{
@@ -21,4 +25,8 @@ p{
 
 .navbar .navbar-nav > li > a {
     line-height: 45px;
+}
+
+.btn-default{
+    background-color: lightgray;
 }

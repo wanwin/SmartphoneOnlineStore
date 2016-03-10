@@ -48,16 +48,31 @@
         </nav>
         <%
             List<Product> products = (List<Product>)request.getAttribute("Products");
+            int numberOfProductsInThisRow = 0;
             if (products != null){
-                out.println("<div class=\"container-fluid\">");
+                out.println("<div class=\"container\">");
                 for (Product product: products){
-                    out.println("<p>ID: " + product.getProductId() + ", Description: " + product.getDescription() + "</p>");
+                    if (numberOfProductsInThisRow % 3 == 0){
+                        out.println("<div class=\"row\">");
+                    }    
+                    out.println("<div class=\"col-md-1 col-md-offset-2\">");
+                    out.println("<img class=\"img-responsive\" src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\">");
+                    out.println("<p class=\"text-center\">" + product.getDescription() + "<br>" + product.getPurchaseCost()+ " €</p>");
+                    out.println("<form action=\"FrontControllerServlet\">");
+                    out.println("<input type=\"hidden\" name=\"command\" value=\"AddToCart\">");
+                    out.println("<input class=\"btn btn-default center-block\" type=\"submit\" value=\"Añadir al carrito\">");
+                    out.println("</form>");
+                    out.println("</div>");
+                    numberOfProductsInThisRow++;
+                    if (numberOfProductsInThisRow % 3 == 0){
+                        out.println("</div>");
+                    }  
                 }
                 out.println("</div>");
             }
         %>
         <footer class="container-fluid text-center">
-            <p style="font-style: italic;color: #000;font-size: small">Copyright 2016 - Darwin Hamad y Evelin Rodrguez</p>
+            <p style="font-style: italic;color: #000;font-size: small">Copyright 2016 - Darwin Hamad y Evelin Rodríguez</p>
         </footer>
         <script src="http://code.jquery.com/jquery.js"></script> 
         <script src="resources/js/bootstrap.js"></script>
