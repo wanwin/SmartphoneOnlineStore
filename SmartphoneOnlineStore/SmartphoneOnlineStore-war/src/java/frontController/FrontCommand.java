@@ -14,6 +14,7 @@ import userBeans.CartLocal;
 abstract class FrontCommand {
     protected static final String CART_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/Cart!userBeans.CartLocal";
     protected static final String CART_PATH = "/cart.jsp";
+    protected static final String PRODUCTS_PATH = "/products.jsp";
     protected ServletContext context;
     protected HttpServletRequest request;
     protected HttpServletResponse response;

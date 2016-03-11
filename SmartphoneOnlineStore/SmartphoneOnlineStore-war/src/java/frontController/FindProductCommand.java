@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 public class FindProductCommand extends FrontCommand{
 
     private static final String PRODUCT_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ProductFacade!controller.ProductFacadeLocal";
-    private static final String PRODUCTS_PATH = "/products.jsp";
     @Override
     public void process(){
         try {

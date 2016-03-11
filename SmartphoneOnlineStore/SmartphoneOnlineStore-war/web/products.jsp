@@ -27,13 +27,14 @@
         <%
             List<Product> products = (List<Product>)request.getAttribute("Products");
             int numberOfProductsInThisRow = 0;
+            
             if (products != null){
                 out.println("<div class=\"container\">");
                 for (Product product: products){
                     if (numberOfProductsInThisRow % 3 == 0){
-                        out.println("<div class=\"row\">");
+                        out.println("<div class=\"row table-bordered\">");
                     }    
-                    out.println("<div class=\"col-md-1 col-md-offset-2\">");
+                    out.println("<div class=\"col-md-1 col-md-offset-2 table-bordered\">");
                     out.println("<img class=\"img-responsive\" src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\">");
                     out.println("<p class=\"text-center\">" + product.getDescription() + "<br>" + product.getPurchaseCost()+ " €</p>");
                     out.println("<form action=\"FrontControllerServlet\">");
@@ -50,9 +51,7 @@
                 out.println("</div>");
             }
         %>
-        <footer class="container-fluid text-center">
-            <p style="font-style: italic;color: #000;font-size: small">Copyright 2016 - Darwin Hamad y Evelin Rodríguez</p>
-        </footer>
+        <div w3-include-HTML="library/footer.html"></div> 
         <script src="http://code.jquery.com/jquery.js"></script> 
         <script src="resources/js/bootstrap.js"></script>
         <script src="resources/js/w3-include-HTML.js"></script>

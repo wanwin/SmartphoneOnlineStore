@@ -1,6 +1,7 @@
 package userBeans;
 
 import entity.Product;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remove;
@@ -22,10 +23,10 @@ public class Cart implements CartLocal {
     }
     
     @Override
-    public int calculateTotal() {
-        int sum = 0;
+    public float calculateTotal() {
+        float sum = 0;
         for (Product product : productList) {
-            sum += product.getPurchaseCost().intValue();
+            sum += product.getPurchaseCost().floatValue();
         }
         return sum;
     }
@@ -34,8 +35,12 @@ public class Cart implements CartLocal {
     @Override
     @Remove
     public void finishPurchase(HttpSession session) {
-        
         session.invalidate();
+    }
+
+    @Override
+    public void delFromCart(Product product) {
+        productList.remove(product);
     }
     
 }

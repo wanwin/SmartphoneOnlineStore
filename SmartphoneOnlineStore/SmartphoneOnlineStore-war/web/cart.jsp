@@ -17,7 +17,7 @@
         <%
             CartLocal cart = (CartLocal) session.getAttribute("cart");
             if (cart == null || cart.getProductList().isEmpty()){
-                out.println("<p>El carrito se encuentra vacío</p>");
+                out.println("<div class=\"text-center bg-warning alert-warning\"><h1>El carrito se encuentra vacío.</h1></div>");
             }
             else{
                 List<Product> products = cart.getProductList();
@@ -30,12 +30,26 @@
                     out.println("<div class=\"col-md-1\">");
                     out.println("<p>" + product.getPurchaseCost()+ "</p>");
                     out.println("</div>");
+                    out.println("<div class=\"col-md-1\">");
+                    out.println("<form action=\"FrontControllerServlet\">");
+                    out.println("<input type=\"hidden\" name=\"command\" value=\"DelFromCartCommand\">");
+                    out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
+                    out.println("<input class=\"btn btn-default center-block\" type=\"submit\" value=\"Eliminar del carrito\">");
+                    out.println("</div>");
                     out.println("</div>");
                 }
                 out.println("<div class=\"col-md-1\">");
                     out.println("<p>TOTAL: " + cart.calculateTotal() +" €</p>");
                     out.println("</div>");
                 out.println("</div>");
+                out.println("<div class=\"container\">");
+                out.println("<form action=\"FrontControllerServlet\">"
+                    +    "<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">"
+                    +    "<input type=\"submit\" value=\"Seguir Comprando\">"
+                    + "</form>");
+                out.println("</div>");
+                
+                
             }
         %>    
         <div w3-include-HTML="library/footer.html"></div>
