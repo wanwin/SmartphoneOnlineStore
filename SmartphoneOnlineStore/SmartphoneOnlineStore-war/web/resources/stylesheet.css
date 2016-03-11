@@ -19,6 +19,21 @@ p{
     padding-top: 2em;
 }
 
+#cartButton{
+    background-image: url("img/carrito.png");    
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left;
+    padding-left: 40px;
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding-top: 2.5em;
+}
+
 .bg1{
     background-color: orange;
 }
@@ -30,3 +45,22 @@ p{
 .btn-default{
     background-color: lightgray;
 }
+
+/*#borrar img {
+    height: calc(100vh - 50px);
+    width: 100%;
+}
+
+@media screen and (min-width: $$px) {
+    
+}*/
+
+/*#contenedor-flex {
+    width: 500px;
+    height: 500px;
+    background: red;
+    display: -webkit-flex; 
+    -webkit-align-items: center;
+    align-items: center;
+    justify-content:center;
+}*/

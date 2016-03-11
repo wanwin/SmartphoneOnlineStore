@@ -18,8 +18,10 @@
                     </form></li>
                 <li><a href="contact.jsp">CONTACTAR</a></li>
                 <li><a href="">INICIAR SESIÓN</a></li>
-                <li><a href=""><img src="resources/img/carrito.png" 
-                                    class="glyphicon-shopping-cart"></a></li>
+                <li><form action="FrontControllerServlet">
+                <input type="hidden" name="command" value="ViewCartCommand">
+                <input id="cartButton" type="submit" value="">
+                </form></li>
             </ul>
         </div>
     </div>
