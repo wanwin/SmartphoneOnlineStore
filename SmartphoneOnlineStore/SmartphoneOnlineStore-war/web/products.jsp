@@ -23,29 +23,6 @@
         <title>Movilazos.es</title>
     </head>
     <body>
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.jsp">
-                        <img src="resources/img/logo_horizontal.png" class="img-responsive"></a>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.jsp">INICIO</a></li>
-                        <li><form action="FrontControllerServlet"><input type="hidden" name="command" value="FindProductCommand"><input type="hidden" name="command" value="FindProductCommand"><input id="transparentButton" type="submit" value="PRODUCTOS"></form></li>
-                        <li><a href="">CONTACTO</a></li>
-                        <li><a href="">INICIAR SESIÓN</a></li>
-                        <li><a href=""><img src="resources/img/carrito.png" 
-                                            class="glyphicon-shopping-cart"></a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
         <div w3-include-HTML="library/navbar.html"></div>
         <%
             List<Product> products = (List<Product>)request.getAttribute("Products");
@@ -78,5 +55,6 @@
         </footer>
         <script src="http://code.jquery.com/jquery.js"></script> 
         <script src="resources/js/bootstrap.js"></script>
+        <script src="resources/js/w3-include-HTML.js"></script>
     </body>
 </html>
