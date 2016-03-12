@@ -35,6 +35,7 @@
                     out.println("<input type=\"hidden\" name=\"command\" value=\"DelFromCartCommand\">");
                     out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
                     out.println("<input class=\"btn btn-default center-block\" type=\"submit\" value=\"Eliminar del carrito\">");
+                    out.println("</form>");
                     out.println("</div>");
                     out.println("</div>");
                 }
@@ -43,13 +44,11 @@
                     out.println("</div>");
                 out.println("</div>");
                 out.println("<div class=\"container\">");
-                out.println("<form action=\"FrontControllerServlet\">"
-                    +    "<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">"
-                    +    "<input type=\"submit\" value=\"Seguir Comprando\">"
-                    + "</form>");
+                out.println("<form action=\"FrontControllerServlet\">");
+                out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
+                out.println("<input type=\"submit\" value=\"Seguir Comprando\">");
+                out.println("</form>");
                 out.println("</div>");
-                
-                
             }
         %>    
         <div w3-include-HTML="library/footer.html"></div>
