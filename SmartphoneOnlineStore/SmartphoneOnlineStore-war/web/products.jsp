@@ -29,26 +29,37 @@
             int numberOfProductsInThisRow = 0;
             
             if (products != null){
-                out.println("<div class=\"container\">");
+                out.println("<div class=\"container-fluid\">");
+                    out.println("<div class=\"text-center\">");
+                        out.println("<h2>Todos los productos</h2>");
+                out.println("</div>");
                 for (Product product: products){
                     if (numberOfProductsInThisRow % 3 == 0){
-                        out.println("<div class=\"row table-bordered\">");
+                        out.println("<div class=\"row\">");
                     }    
-                    out.println("<div class=\"col-md-1 col-md-offset-2 table-bordered\">");
-                    out.println("<img class=\"img-responsive\" src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\">");
-                    out.println("<p class=\"text-center\">" + product.getDescription() + "<br>" + product.getPurchaseCost()+ " €</p>");
-                    out.println("<form action=\"FrontControllerServlet\">");
-                    out.println("<input type=\"hidden\" name=\"command\" value=\"AddToCartCommand\">");
-                    out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
-                    out.println("<input class=\"btn btn-default center-block\" type=\"submit\" value=\"Añadir al carrito\">");
-                    out.println("</form>");
-                    out.println("</div>");
+                            out.println("<div class=\"col-md-4\">");
+                                out.println("<div class=\"panel panel-default text-center\">");
+                                    out.println("<div class=\"panel-heading\">");
+                                        out.println("<h3>" + product.getDescription() + "</h3>");
+                                    out.println("</div>");
+                                    out.println("<div class=\"panel-body\">");
+                                        out.println("<img src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\" width=\"100\" height=\"100\">");
+                                    out.println("</div>");
+                                    out.println("<div class=\"panel-footer\">");
+                                        out.println("<h3>" + product.getPurchaseCost() + "€</h3>");
+                                        out.println("<form action=\"FrontControllerServlet\">");
+                                        out.println("<input type=\"hidden\" name=\"command\" value=\"AddToCartCommand\">");
+                                        out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
+                                        out.println("<input class=\"btn btn-lg\" type=\"submit\" value=\"Añadir al carrito\">");
+                                        out.println("</form>");
+                                    out.println("</div>");
+                                out.println("</div>");
+                            out.println("</div>");
                     numberOfProductsInThisRow++;
                     if (numberOfProductsInThisRow % 3 == 0){
                         out.println("</div>");
                     }  
                 }
-                out.println("</div>");
             }
         %>
         <div w3-include-HTML="library/footer.html"></div> 

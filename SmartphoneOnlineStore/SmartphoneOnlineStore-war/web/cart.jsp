@@ -22,32 +22,52 @@
             else{
                 List<Product> products = cart.getProductList();
                 out.println("<div class=\"container\">");
+                    out.println("<h2>Productos añadidos al carrito</h2>");
+                    out.println("<table class=\"table table-hover\">");
+                        out.println("<thead>");
+                            out.println("<tr>");
+                                out.println("<th>IMAGEN</th>");
+                                out.println("<th>PRODUCTO</th>");
+                                out.println("<th>PRECIO</th>");
+                                out.println("<th>¿ELIMINAR?</th>");
+                            out.println("</tr>");
+                        out.println("</thead>");
+                        out.println("<tbody>");
                 for (Product product: products){
-                    out.println("<div class=\"row\">");
-                    out.println("<div class=\"col-md-1\">");
-                    out.println("<p>" + product.getDescription() + "</p>");
-                    out.println("</div>");
-                    out.println("<div class=\"col-md-1\">");
-                    out.println("<p>" + product.getPurchaseCost()+ "</p>");
-                    out.println("</div>");
-                    out.println("<div class=\"col-md-1\">");
-                    out.println("<form action=\"FrontControllerServlet\">");
-                    out.println("<input type=\"hidden\" name=\"command\" value=\"DelFromCartCommand\">");
-                    out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
-                    out.println("<input class=\"btn btn-default center-block\" type=\"submit\" value=\"Eliminar del carrito\">");
-                    out.println("</form>");
-                    out.println("</div>");
-                    out.println("</div>");
+                            out.println("<tr>");
+                                out.println("<td><img src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\" width=\"50\" height=\"50\"></td>");
+                                out.println("<td>" + product.getDescription() + "</td>");
+                                out.println("<td>" + product.getPurchaseCost() + "</td>");
+                                out.println("<td>");
+                                    out.println("<form action=\"FrontControllerServlet\">");
+                                    out.println("<input type=\"hidden\" name=\"command\" value=\"DelFromCartCommand\">");
+                                    out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
+                                    out.println("<input class=\"btn btn-delFromCart\" type=\"submit\" value=\"Eliminar del carrito\">");
+                                    out.println("</form>");
+                                out.println("</td>");
+                            out.println("</tr>");
+                    
                 }
-                out.println("<div class=\"col-md-1\">");
-                    out.println("<p>TOTAL: " + cart.calculateTotal() +" €</p>");
-                    out.println("</div>");
-                out.println("</div>");
-                out.println("<div class=\"container\">");
-                out.println("<form action=\"FrontControllerServlet\">");
-                out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
-                out.println("<input type=\"submit\" value=\"Seguir Comprando\">");
-                out.println("</form>");
+                            out.println("<thead>");
+                            out.println("<tr>");
+                                out.println("<th></th>");
+                                out.println("<th></th>");
+                                out.println("<th></th>");
+                                out.println("<th class=\"info\">TOTAL: " + cart.calculateTotal() +" €</th>");
+                            out.println("</tr>");
+                        out.println("</thead>");
+                        out.println("<tbody>");
+                            out.println("<tr>");
+                                out.println("<td colspan=\"4\" style=\"text-align:center\">");
+                                    out.println("<form action=\"FrontControllerServlet\">");
+                                    out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
+                                    out.println("<input class=\"btn btn-continueShopping\" type=\"submit\" value=\"Seguir Comprando\">");
+                                    out.println("</form>");
+                                out.println("</td>");
+                            out.println("</tr>");
+                        out.println("</tbody>");
+                        out.println("</tbody>");
+                    out.println("</table>");
                 out.println("</div>");
             }
         %>    

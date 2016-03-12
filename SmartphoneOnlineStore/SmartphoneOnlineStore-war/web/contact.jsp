@@ -7,32 +7,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="resources/css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="resources/stylesheet.css" rel="stylesheet" media="screen">
-        <title>Movilazos.es</title>
+        <title>Contactar</title>
     </head>
     <body>
         <div w3-include-HTML="library/navbar.html"></div>
         <div class="container-fluid bg-grey">
-            <h2 class="text-center">CONTACT</h2>
+            <h2 class="text-center">CONTACTAR</h2>
             <div class="row">
                 <div class="col-sm-5">
-                    <p>Contact us and we'll get back to you within 24 hours.</p>
-                    <p><span class="glyphicon glyphicon-map-marker"></span> Chicago, US</p>
-                    <p><span class="glyphicon glyphicon-phone"></span> +00 1515151515</p>
-                    <p><span class="glyphicon glyphicon-envelope"></span> myemail@something.com</p>
+                    <p>Contacta ahora con nosotros y te atenderemos sin compromiso.</p>
+                    <p><span class="glyphicon glyphicon-map-marker"></span> Campus Universitario de Tafira - ULPGC</p>
+                    <p><span class="glyphicon glyphicon-phone"></span> 928 928 928</p>
+                    <p><span class="glyphicon glyphicon-envelope"></span> info@movilazos.es</p>
                 </div>
                 <div class="col-sm-7">
                     <div class="row">
                         <div class="col-sm-6 form-group">
-                            <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+                            <input class="form-control" id="name" name="name" placeholder="Nombre" type="text" required>
                         </div>
                         <div class="col-sm-6 form-group">
                             <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
                         </div>
                     </div>
-                    <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+                    <textarea class="form-control" id="comments" name="comments" placeholder="Comentario" rows="5"></textarea><br>
                     <div class="row">
                         <div class="col-sm-12 form-group">
-                            <button class="btn btn-default pull-right" type="submit">Send</button>
+                            <button class="btn btn-default pull-right" type="submit">Enviar</button>
                         </div>
                     </div>
                 </div>
@@ -44,14 +44,14 @@
         <!-- Add Google Maps -->
         <script src="http://maps.googleapis.com/maps/api/js"></script>
         <script>
-        var myCenter = new google.maps.LatLng(41.878114, -87.629798);
+        var myCenter = new google.maps.LatLng(28.07330359659391, -15.451401634484913);
 
         function initialize() {
         var mapProp = {
         center:myCenter,
-        zoom:12,
-        scrollwheel:false,
-        draggable:false,
+        zoom:18,
+        scrollwheel:true,
+        draggable:true,
         mapTypeId:google.maps.MapTypeId.ROADMAP
         };
 

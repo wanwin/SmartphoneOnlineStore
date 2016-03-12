@@ -49,6 +49,26 @@ p{
     background-color: lightgray;
 }
 
+.btn-delFromCart{
+    background-color: #ffaaa2;
+    color: white;
+}
+
+.btn-delFromCart:hover{
+    background-color: #ff7a72;
+    color: white;
+}
+
+.btn-continueShopping{
+    background-color: #c4ffc0;
+    color: black;
+}
+
+.btn-continueShopping:hover{
+    background-color: #81ff7b;
+    color: black;
+}
+
 /*#borrar img {
     height: calc(100vh - 50px);
     width: 100%;
