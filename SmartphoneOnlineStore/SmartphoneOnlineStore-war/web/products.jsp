@@ -40,7 +40,7 @@
                             out.println("<div class=\"col-md-4\">");
                                 out.println("<div class=\"panel panel-default text-center\">");
                                     out.println("<div class=\"panel-heading\">");
-                                        out.println("<h3>" + product.getDescription() + "</h3>");
+                                        out.println("<h3>" + product.getBrand() + " " + product.getDescription() + "</h3>");
                                     out.println("</div>");
                                     out.println("<div class=\"panel-body\">");
                                         out.println("<img src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\" width=\"100\" height=\"100\">");
