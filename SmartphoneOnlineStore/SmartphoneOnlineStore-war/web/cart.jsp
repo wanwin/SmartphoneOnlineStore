@@ -18,6 +18,10 @@
             CartLocal cart = (CartLocal) session.getAttribute("cart");
             if (cart == null || cart.getProductList().isEmpty()){
                 out.println("<div class=\"text-center bg-warning alert-warning\"><h1>El carrito se encuentra vacío.</h1></div>");
+                out.println("<form class=\"text-center\" action=\"FrontControllerServlet\">");
+                out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
+                out.println("<input class=\"btn btn-continueShopping\" type=\"submit\" value=\"Seguir Comprando\">");
+                out.println("</form>");
             }
             else{
                 List<Product> products = cart.getProductList();

@@ -1,9 +1,5 @@
-<%-- 
-    Document   : products
-    Created on : 09-mar-2016, 0:33:52
-    Author     : evelin
---%>
-
+<%@page import="java.io.IOException"%>
+<%@page import="java.util.HashSet"%>
 <%@page import="entity.Product"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
@@ -24,14 +20,30 @@
     </head>
     <body>
         <div w3-include-HTML="library/navbar.html"></div>
+        <%!
+            public void obtainBrandsFromProducts(List<Product> products, JspWriter out) throws IOException{
+                HashSet<String> productBrands = new HashSet<String>();
+                for (Product productToObtainBrand: products){
+                    if (productBrands.add(productToObtainBrand.getBrand())){
+                        out.println("<li><a href=\"#\">" + productToObtainBrand.getBrand() + "</a></li>");
+                    }    
+                }
+            }
+        %>
+        
         <%
             List<Product> products = (List<Product>)request.getAttribute("Products");
             int numberOfProductsInThisRow = 0;
-            
             if (products != null){
                 out.println("<div class=\"container-fluid\">");
-                    out.println("<div class=\"text-center\">");
-                        out.println("<h2>Todos los productos</h2>");
+                    out.println("<div class=\"dropdown\">");
+                        out.println("<button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Marca");
+                        out.println("<span class=\"caret\"></span></button>");
+                        out.println("<ul class=\"dropdown-menu\">");
+                        out.println("<li><a href=\"#\">Todas</a></li>");
+                        obtainBrandsFromProducts(products, out);
+                        out.println("</ul>");
+                     out.println("</div>");
                 out.println("</div>");
                 for (Product product: products){
                     if (numberOfProductsInThisRow % 3 == 0){
@@ -43,7 +55,7 @@
                                         out.println("<h3>" + product.getBrand() + " " + product.getDescription() + "</h3>");
                                     out.println("</div>");
                                     out.println("<div class=\"panel-body\">");
-                                        out.println("<img src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\" width=\"100\" height=\"100\">");
+                                        out.println("<img src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\" width=\"100\" height=\"100\" alt=\"Móvil_img\">");
                                     out.println("</div>");
                                     out.println("<div class=\"panel-footer\">");
                                         out.println("<h3>" + product.getPurchaseCost() + "€</h3>");
