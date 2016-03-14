@@ -21,12 +21,19 @@
     <body>
         <div w3-include-HTML="library/navbar.html"></div>
         <%!
-            public void obtainBrandsFromProducts(List<Product> products, JspWriter out) throws IOException{
+            private void obtainBrandsFromProducts(List<Product> products, JspWriter out) throws IOException{
                 HashSet<String> productBrands = new HashSet<String>();
                 for (Product productToObtainBrand: products){
                     if (productBrands.add(productToObtainBrand.getBrand())){
                         out.println("<li><a href=\"#\">" + productToObtainBrand.getBrand() + "</a></li>");
                     }    
+                }
+            }
+            private String obtainCssClassOfAddToCartButton(Product product){
+                if (product.getQuantityOnHand() > 0){
+                    return "<input class=\"btn btn-lg\" type=\"submit\" value=\"Añadir al carrito\">";
+                }else{
+                    return "<input class=\"btn disabled\" value=\"Añadir al carrito\">";
                 }
             }
         %>
@@ -52,17 +59,18 @@
                             out.println("<div class=\"col-md-4\">");
                                 out.println("<div class=\"panel panel-default text-center\">");
                                     out.println("<div class=\"panel-heading\">");
-                                        out.println("<h3>" + product.getBrand() + " " + product.getDescription() + "</h3>");
+                                        out.println("<h3>" + product.getBrand() + "<br>" + product.getDescription() + "</h3>");
                                     out.println("</div>");
                                     out.println("<div class=\"panel-body\">");
                                         out.println("<img src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\" width=\"100\" height=\"100\" alt=\"Móvil_img\">");
                                     out.println("</div>");
                                     out.println("<div class=\"panel-footer\">");
                                         out.println("<h3>" + product.getPurchaseCost() + "€</h3>");
+                                        out.println("<h5>Stock: " + product.getQuantityOnHand() + "</h5>");
                                         out.println("<form action=\"FrontControllerServlet\">");
                                         out.println("<input type=\"hidden\" name=\"command\" value=\"AddToCartCommand\">");
                                         out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
-                                        out.println("<input class=\"btn btn-lg\" type=\"submit\" value=\"Añadir al carrito\">");
+                                        out.println(obtainCssClassOfAddToCartButton(product));
                                         out.println("</form>");
                                     out.println("</div>");
                                 out.println("</div>");
