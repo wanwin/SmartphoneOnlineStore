@@ -42,6 +42,7 @@
             List<Product> products = (List<Product>)request.getAttribute("Products");
             int numberOfProductsInThisRow = 0;
             if (products != null){
+                
                 out.println("<div class=\"container-fluid\">");
                     out.println("<div class=\"dropdown\">");
                         out.println("<button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Marca");

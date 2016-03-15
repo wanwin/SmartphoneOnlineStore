@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 
 public class FindProductCommand extends FrontCommand{
 
-    private static final String PRODUCT_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ProductFacade!controller.ProductFacadeLocal";
     @Override
     public void process(){
         try {

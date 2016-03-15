@@ -11,9 +11,7 @@ public class ViewCartCommand extends FrontCommand{
     @Override
     public void process(){
         try {
-            HttpSession session = getSession(request);
-            CartLocal cart = (CartLocal) session.getAttribute("cart");
-            initCart(cart, session);
+            initCart();
             forward(CART_PATH);
         } catch (NamingException ex) {
         } catch (ServletException | IOException ex) {

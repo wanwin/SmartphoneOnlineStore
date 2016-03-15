@@ -15,6 +15,8 @@ abstract class FrontCommand {
     protected static final String CART_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/Cart!userBeans.CartLocal";
     protected static final String CART_PATH = "/cart.jsp";
     protected static final String PRODUCTS_PATH = "/products.jsp";
+    protected static final String PRODUCT_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ProductFacade!controller.ProductFacadeLocal";
+    
     protected ServletContext context;
     protected HttpServletRequest request;
     protected HttpServletResponse response;
@@ -37,9 +39,11 @@ abstract class FrontCommand {
         return request.getSession(true);
     }
 
-    protected CartLocal initCart(CartLocal cart, HttpSession session) throws NamingException {
+    protected CartLocal initCart() throws NamingException {
+        HttpSession session = getSession(request);
+        CartLocal cart = (CartLocal) session.getAttribute("cart");
         if (cart == null) {
-            cart = InitialContext.doLookup(AddToCartCommand.CART_JNDI_URL);
+            cart = InitialContext.doLookup(CART_JNDI_URL);
             session.setAttribute("cart", cart);
         }
         return cart;
