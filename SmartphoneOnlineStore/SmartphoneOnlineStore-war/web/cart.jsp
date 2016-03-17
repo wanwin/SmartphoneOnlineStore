@@ -13,7 +13,7 @@
         <title>Carrito</title>
     </head>
     <body>
-        <div w3-include-HTML="library/navbar.html"></div>
+        <div w3-include-HTML="library/navbar.jsp"></div>
         <%
             CartLocal cart = (CartLocal) session.getAttribute("cart");
             if (cart == null || cart.getProductList().isEmpty()){

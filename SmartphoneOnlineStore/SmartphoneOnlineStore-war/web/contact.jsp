@@ -10,7 +10,7 @@
         <title>Contactar</title>
     </head>
     <body>
-        <div w3-include-HTML="library/navbar.html"></div>
+        <div w3-include-HTML="library/navbar.jsp"></div>
         <div class="container-fluid bg-grey">
             <h2 class="text-center">CONTACTAR</h2>
             <div class="row">

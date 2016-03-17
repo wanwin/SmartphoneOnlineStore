@@ -1,3 +1,4 @@
+<%@page import="userBeans.CartLocal"%>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -21,6 +22,17 @@
                         <input type="hidden" name="command" value="ViewCartCommand">
                         <input id="cartButton" type="submit" value="">
                 </form></li>
+                <li>
+                    <% 
+                        CartLocal cart = (CartLocal) session.getAttribute("cart");
+                        if (cart == null){
+                            out.println("<p>0</p>");
+                        }
+                        else{
+                            out.println("<p>" + cart.getProductList().size() + "</p>");
+                        }
+                    %>
+                </li>
             </ul>
         </div>
     </div>

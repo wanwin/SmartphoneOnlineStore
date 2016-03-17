@@ -10,7 +10,7 @@
         <title>Movilazos.es</title>
     </head>
     <body>
-        <div w3-include-HTML="library/navbar.html"></div>
+        <div w3-include-HTML="library/navbar.jsp"></div>
         <div w3-include-HTML="library/carousel.html"></div>
         <div w3-include-HTML="library/breadcrumb.html"></div>
         <div w3-include-HTML="library/footer.html"></div>

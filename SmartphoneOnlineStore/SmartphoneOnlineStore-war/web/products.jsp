@@ -21,7 +21,7 @@
         <title>Productos</title>
     </head>
     <body>
-        <div w3-include-HTML="library/navbar.html"></div>
+        <div w3-include-HTML="library/navbar.jsp"></div>
         <%!
             private void insertBrandsInDropdownList(List<Manufacturer> manufacturers, JspWriter out) throws IOException{
                 out.println("<li>");
