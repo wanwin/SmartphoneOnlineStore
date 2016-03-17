@@ -26,10 +26,10 @@
                     <% 
                         CartLocal cart = (CartLocal) session.getAttribute("cart");
                         if (cart == null){
-                            out.println("<p>0</p>");
+                            out.println("<div class=\"round\"><p>0</p></div>");
                         }
                         else{
-                            out.println("<p>" + cart.getProductList().size() + "</p>");
+                            out.println("<div class=\"round\"><p>" + cart.getProductList().size() + "</p></div>");
                         }
                     %>
                 </li>

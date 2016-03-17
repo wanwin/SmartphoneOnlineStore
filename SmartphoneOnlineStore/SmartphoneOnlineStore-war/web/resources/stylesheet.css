@@ -42,6 +42,18 @@ p{
     background-color: orange;
 }
 
+.round {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #F4511E;    
+    text-align: center;  
+    margin-top: 1.5em;
+}
+
 .navbar .navbar-nav > li > a {
     line-height: 45px;
 }
