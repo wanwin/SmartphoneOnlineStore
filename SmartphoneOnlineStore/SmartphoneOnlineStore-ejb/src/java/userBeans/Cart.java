@@ -1,7 +1,6 @@
 package userBeans;
 
 import entity.Product;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remove;
@@ -13,6 +12,7 @@ public class Cart implements CartLocal {
 
     private List<Product> productList = new ArrayList<>();
     
+    @Override
     public List<Product> getProductList() {
         return productList;
     }

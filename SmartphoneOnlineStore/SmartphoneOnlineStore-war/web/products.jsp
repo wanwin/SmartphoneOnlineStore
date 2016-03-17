@@ -1,3 +1,4 @@
+<%@page import="java.util.Iterator"%>
 <%@page import="entity.Manufacturer"%>
 <%@page import="java.io.IOException"%>
 <%@page import="java.util.HashSet"%>
@@ -64,7 +65,9 @@
                         out.println("</ul>");
                      out.println("</div>");
                 out.println("</div>");
-                for (Product product: products){
+                Iterator productsIterator = products.iterator();
+                while (productsIterator.hasNext()){
+                    Product product = (Product) productsIterator.next();
                     if (numberOfProductsInThisRow % 3 == 0){
                         out.println("<div class=\"row\">");
                     }    
@@ -88,7 +91,7 @@
                                 out.println("</div>");
                             out.println("</div>");
                     numberOfProductsInThisRow++;
-                    if (numberOfProductsInThisRow % 3 == 0){
+                    if (numberOfProductsInThisRow % 3 == 0 || !productsIterator.hasNext()){
                         out.println("</div>");
                     }  
                 }

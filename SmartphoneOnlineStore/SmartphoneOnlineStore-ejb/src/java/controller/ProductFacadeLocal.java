@@ -5,7 +5,6 @@
  */
 package controller;
 
-import entity.Manufacturer;
 import entity.Product;
 import java.util.List;
 import javax.ejb.Local;

@@ -22,8 +22,15 @@ public class FindProductCommand extends FrontCommand{
             List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
             List<Product> products = new ArrayList<Product>();
             if (manufacturerID != null){
+                ArrayList<Product> productsToRemove = new ArrayList<>();
                 manufacturers.add(manufacturerFacade.find(Integer.parseInt(manufacturerID)));
-                products.add(productFacade.find(Integer.parseInt(manufacturerID)));
+                products.addAll(productFacade.findAll());
+                for (Product product : products) {
+                    if (product.getManufacturerId().getManufacturerId() != Integer.parseInt(manufacturerID)){
+                        productsToRemove.add(product);
+                    }
+                }
+                products.removeAll(productsToRemove);
             }
             else{
                 manufacturers.addAll(manufacturerFacade.findAll());
