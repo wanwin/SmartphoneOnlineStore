@@ -60,9 +60,6 @@ public class Product implements Serializable {
     @Size(max = 50)
     @Column(name = "DESCRIPTION")
     private String description;
-    @Size(max = 50)
-    @Column(name = "BRAND")
-    private String brand;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     private Collection<PurchaseOrder> purchaseOrderCollection;
     @JoinColumn(name = "MANUFACTURER_ID", referencedColumnName = "MANUFACTURER_ID")
@@ -115,13 +112,6 @@ public class Product implements Serializable {
         return available;
     }
     
-    public String getBrand(){
-        return brand;
-    }
-
-    
-    
-
     public void setAvailable(String available) {
         this.available = available;
     }
@@ -159,10 +149,6 @@ public class Product implements Serializable {
         this.productCode = productCode;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-    
     @Override
     public int hashCode() {
         int hash = 0;

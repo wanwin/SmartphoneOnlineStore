@@ -3,8 +3,6 @@ package frontController;
 import java.io.IOException;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpSession;
-import userBeans.CartLocal;
 
 public class ViewCartCommand extends FrontCommand{
 

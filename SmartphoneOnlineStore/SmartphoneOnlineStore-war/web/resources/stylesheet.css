@@ -19,6 +19,7 @@ p{
     padding-top: 2em;
 }
 
+
 #transparentButton:hover{
     color: black;
 }
@@ -68,7 +69,21 @@ p{
     background-color: #81ff7b;
     color: black;
 }
+.scrollable-menu{
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
 
+.dropdownButton{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: black;            
+}
 /*#borrar img {
     height: calc(100vh - 50px);
     width: 100%;

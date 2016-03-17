@@ -16,6 +16,7 @@ abstract class FrontCommand {
     protected static final String CART_PATH = "/cart.jsp";
     protected static final String PRODUCTS_PATH = "/products.jsp";
     protected static final String PRODUCT_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ProductFacade!controller.ProductFacadeLocal";
+    protected static final String MANUFACTURER_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ManufacturerFacade!controller.ManufacturerFacadeLocal";
     
     protected ServletContext context;
     protected HttpServletRequest request;

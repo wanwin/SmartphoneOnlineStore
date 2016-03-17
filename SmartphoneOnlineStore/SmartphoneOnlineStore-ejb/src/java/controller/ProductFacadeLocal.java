@@ -5,6 +5,7 @@
  */
 package controller;
 
+import entity.Manufacturer;
 import entity.Product;
 import java.util.List;
 import javax.ejb.Local;
@@ -23,7 +24,7 @@ public interface ProductFacadeLocal {
     void remove(Product product);
 
     Product find(Object id);
-
+    
     List<Product> findAll();
 
     List<Product> findRange(int[] range);

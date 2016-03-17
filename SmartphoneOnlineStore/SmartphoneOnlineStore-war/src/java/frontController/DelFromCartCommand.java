@@ -4,7 +4,6 @@ import controller.ProductFacadeLocal;
 import entity.Product;
 import static frontController.FrontCommand.CART_PATH;
 import java.io.IOException;
-import static java.lang.System.out;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;

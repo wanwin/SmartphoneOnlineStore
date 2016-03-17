@@ -2,11 +2,8 @@ package frontController;
 
 import controller.ProductFacadeLocal;
 import entity.Product;
-import java.io.IOException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpSession;
 import userBeans.CartLocal;
 
 public class AddToCartCommand extends FrontCommand{
@@ -14,9 +11,7 @@ public class AddToCartCommand extends FrontCommand{
     @Override
     public void process(){
         try {
-            HttpSession session = getSession(request);
-            CartLocal cart = (CartLocal) session.getAttribute("cart");
-            cart = initCart();
+            CartLocal cart = initCart();
             String productId = request.getParameter("productId");
             ProductFacadeLocal productFacade = (ProductFacadeLocal) InitialContext.doLookup(PRODUCT_JNDI_URL);
             Product product = productFacade.find(Integer.parseInt(productId));
@@ -25,10 +20,11 @@ public class AddToCartCommand extends FrontCommand{
                 /*product.setQuantityOnHand(product.getQuantityOnHand() - 1);
                 productFacade.edit(product);*/
             }
-            try {
-                forward(CART_PATH);
-            } catch (ServletException | IOException ex) {
-            }
+            FindProductCommand findProductCommand = new FindProductCommand();
+            findProductCommand.context = this.context;
+            findProductCommand.request = this.request;
+            findProductCommand.response = this.response;
+            findProductCommand.process();
         } catch (NamingException ex) {
         }
     }
