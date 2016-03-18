@@ -24,8 +24,162 @@ p{
     color: black;
 }
 
-#cartButton{
-    background-image: url("img/carrito.png");    
+#cartButton0{
+    background-image: url("img/carrito0.png");    
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left;
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding: 2em;
+}
+
+#cartButton1{
+    background-image: url("img/carrito1.png");    
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left;
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding: 2em;
+}
+
+#cartButton2{
+    background-image: url("img/carrito2.png");    
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left;
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding: 2em;
+}
+
+#cartButton3{
+    background-image: url("img/carrito3.png");    
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left;
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding: 2em;
+}
+
+#cartButton4{
+    background-image: url("img/carrito4.png");    
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left;
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding: 2em;
+}
+
+#cartButton5{
+    background-image: url("img/carrito5.png");    
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left;
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding: 2em;
+}
+
+#cartButton6{
+    background-image: url("img/carrito6.png");    
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left;
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding: 2em;
+}
+
+#cartButton7{
+    background-image: url("img/carrito7.png");    
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left;
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding: 2em;
+}
+
+#cartButton8{
+    background-image: url("img/carrito8.png");    
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left;
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding: 2em;
+}
+
+#cartButton9{
+    background-image: url("img/carrito9.png");    
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left;
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding: 2em;
+}
+
+#cartButton10{
+    background-image: url("img/carrito10.png");    
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left;
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding: 2em;
+}
+
+#cartButton11{
+    background-image: url("img/carrito11.png");    
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: left;
@@ -44,14 +198,15 @@ p{
 
 .round {
     display: inline-block;
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
     line-height: 30px;
     -moz-border-radius: 15px;
     border-radius: 15px;
     background-color: #F4511E;    
     text-align: center;  
     margin-top: 1.5em;
+    font-size: smaller;
 }
 
 .navbar .navbar-nav > li > a {

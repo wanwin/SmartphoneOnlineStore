@@ -20,19 +20,17 @@
                 <li><a href="contact.jsp">CONTACTAR</a></li>
                 <li><form action="FrontControllerServlet">
                         <input type="hidden" name="command" value="ViewCartCommand">
-                        <input id="cartButton" type="submit" value="">
+                        <%
+                            CartLocal cart = (CartLocal) session.getAttribute("cart");
+                            if (cart == null){
+                                out.println("<input id=\"cartButton0\" type=\"submit\" value=\"\">");
+                            }else{
+                                if (cart.getProductList().size() <= 10){
+                                    out.println("<input id=\"cartButton" + cart.getProductList().size() + "\" type=\"submit\" value=\"\">");
+                                }else out.println("<input id=\"cartButton11\" type=\"submit\" value=\"\">");
+                            }
+                        %>
                 </form></li>
-                <li>
-                    <% 
-                        CartLocal cart = (CartLocal) session.getAttribute("cart");
-                        if (cart == null){
-                            out.println("<div class=\"round\"><p>0</p></div>");
-                        }
-                        else{
-                            out.println("<div class=\"round\"><p>" + cart.getProductList().size() + "</p></div>");
-                        }
-                    %>
-                </li>
             </ul>
         </div>
     </div>

@@ -57,14 +57,16 @@
             int numberOfProductsInThisRow = 0;
             if (products != null){
                 out.println("<div class=\"container-fluid\">");
+                    out.println("<br>");
                     out.println("<div class=\"dropdown \">");
-                        out.println("<button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Marca");
+                        out.println("<button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filtrar por marca");
                         out.println("<span class=\"caret\"></span></button>");
                         out.println("<ul class=\"dropdown-menu scrollable-menu\">");
                         insertBrandsInDropdownList(manufacturers, out);
                         out.println("</ul>");
                      out.println("</div>");
                 out.println("</div>");
+                out.println("<br>");
                 Iterator productsIterator = products.iterator();
                 while (productsIterator.hasNext()){
                     Product product = (Product) productsIterator.next();
