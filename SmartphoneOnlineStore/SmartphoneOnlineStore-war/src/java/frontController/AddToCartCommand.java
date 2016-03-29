@@ -17,8 +17,6 @@ public class AddToCartCommand extends FrontCommand{
             Product product = productFacade.find(Integer.parseInt(productId));
             if (isAvailable(product)){
                 cart.addToCart(product);
-                /*product.setQuantityOnHand(product.getQuantityOnHand() - 1);
-                productFacade.edit(product);*/
             }
             FindProductCommand findProductCommand = new FindProductCommand();
             findProductCommand.context = this.context;

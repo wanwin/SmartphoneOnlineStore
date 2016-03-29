@@ -21,7 +21,7 @@
                 out.println("<form class=\"text-center\" action=\"FrontControllerServlet\">");
                 out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
                 out.println("<input class=\"btn btn-continueShopping\" type=\"submit\" value=\"Seguir Comprando\">");
-                out.println("</form>");
+                out.println("</form><br>");
             }
             else{
                 List<Product> products = cart.getProductList();
@@ -50,7 +50,6 @@
                                     out.println("</form>");
                                 out.println("</td>");
                             out.println("</tr>");
-                    
                 }
                             out.println("<thead>");
                             out.println("<tr>");
@@ -62,10 +61,16 @@
                         out.println("</thead>");
                         out.println("<tbody>");
                             out.println("<tr>");
-                                out.println("<td colspan=\"4\" style=\"text-align:center\">");
+                                out.println("<td colspan=\"3\" style=\"text-align:center\">");
                                     out.println("<form action=\"FrontControllerServlet\">");
                                     out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
                                     out.println("<input class=\"btn btn-continueShopping\" type=\"submit\" value=\"Seguir Comprando\">");
+                                    out.println("</form>");
+                                out.println("</td>");
+                                out.println("<td colspan=\"1\" style=\"text-align:center\">");
+                                    out.println("<form action=\"purchase.jsp\">");
+                                    out.println("<input type=\"hidden\" name=\"command\" value=\"Purchase\">");
+                                    out.println("<input class=\"btn btn-purchase\" type=\"submit\" value=\"Finalizar Compra\">");
                                     out.println("</form>");
                                 out.println("</td>");
                             out.println("</tr>");
