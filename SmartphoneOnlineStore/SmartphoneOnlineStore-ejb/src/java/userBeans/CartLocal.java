@@ -1,7 +1,6 @@
 package userBeans;
 
 import entity.Product;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Local;
 import javax.servlet.http.HttpSession;
