@@ -1,8 +1,8 @@
 package userBeans;
 
 import entity.Product;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.servlet.http.HttpSession;
@@ -10,23 +10,30 @@ import javax.servlet.http.HttpSession;
 @Stateful
 public class Cart implements CartLocal {
 
-    private List<Product> productList = new ArrayList<>();
+    private final HashMap<Product,Integer> products = new HashMap<>();
     
     @Override
-    public List<Product> getProductList() {
-        return productList;
+    public HashMap<Product,Integer> getProducts() {
+        return products;
     }
     
     @Override
     public void addToCart(Product product) {
-        productList.add(product);
+        if (products.containsKey(product)){
+            products.put(product, products.get(product) + 1);
+        }
+        else{
+            products.put(product, 1);
+        }
     }
     
     @Override
     public float calculateTotal() {
         float sum = 0;
-        for (Product product : productList) {
-            sum += product.getPurchaseCost().floatValue();
+        for (Entry<Product,Integer> entry: products.entrySet()){
+            Product product = entry.getKey();
+            Integer quantity = entry.getValue();
+            sum += product.getPurchaseCost().floatValue() * quantity;
         }
         return sum;
     }
@@ -40,7 +47,7 @@ public class Cart implements CartLocal {
 
     @Override
     public void delFromCart(Product product) {
-        productList.remove(product);
+        products.remove(product);
     }
     
 }

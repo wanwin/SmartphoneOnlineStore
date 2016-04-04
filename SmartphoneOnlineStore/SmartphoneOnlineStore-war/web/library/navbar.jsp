@@ -1,3 +1,6 @@
+<%@page import="java.util.Map.Entry"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="entity.Product"%>
 <%@page import="userBeans.CartLocal"%>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -25,8 +28,14 @@
                             if (cart == null){
                                 out.println("<input id=\"cartButton0\" type=\"submit\" value=\"\">");
                             }else{
-                                if (cart.getProductList().size() <= 10){
-                                    out.println("<input id=\"cartButton" + cart.getProductList().size() + "\" type=\"submit\" value=\"\">");
+                                HashMap<Product,Integer> products = cart.getProducts();
+                                Integer numberOfProductsInCart = 0; 
+                                for (Entry<Product,Integer> entry: products.entrySet()){
+                                    Integer quantity = entry.getValue();
+                                    numberOfProductsInCart += quantity;
+                                }
+                                if (numberOfProductsInCart <= 10){
+                                    out.println("<input id=\"cartButton" + numberOfProductsInCart + "\" type=\"submit\" value=\"\">");
                                 }else out.println("<input id=\"cartButton11\" type=\"submit\" value=\"\">");
                             }
                         %>

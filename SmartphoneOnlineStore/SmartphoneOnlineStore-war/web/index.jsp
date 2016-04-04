@@ -1,7 +1,7 @@
+<%@page import="userBeans.StatisticsLocal"%>
 <%@page import="javax.servlet.http.HttpSession"%>
 <%@page import="javax.naming.NamingException"%>
 <%@page import="javax.naming.InitialContext"%>
-<%@page import="userBeans.StatisticsLocal"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,7 +14,7 @@
         <title>Movilazos.es</title>
     </head>
     <body>
-        <%!
+         <%!
             public StatisticsLocal getStatisticsSingleton(HttpSession session, HttpServletRequest request) throws NamingException{
                 StatisticsLocal statistics = (StatisticsLocal )session.getAttribute("Statistics");
                 if (session.getAttribute("Statistics") == null){
@@ -23,7 +23,7 @@
                 }    
                 return statistics;
             }
-        %>   
+        %>  
         <div w3-include-HTML="library/navbar.jsp"></div>
         <div w3-include-HTML="library/carousel.html"></div>
         <div w3-include-HTML="library/breadcrumb.html"></div>
@@ -37,7 +37,6 @@
             out.println("<p>Usuarios conectados: " + statistics.getNumberOfUsersConnected() + "</p>");
             out.println("</div>");
         %> 
-        <p>
         <script src="http://code.jquery.com/jquery.js"></script> 
         <script src="resources/js/bootstrap.js"></script>
         <script src="resources/js/w3-include-HTML.js"></script>

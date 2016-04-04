@@ -1,3 +1,8 @@
+<%@page import="java.util.Map.Entry"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="javax.naming.InitialContext"%>
+<%@page import="userBeans.StatisticsLocal"%>
+<%@page import="javax.naming.NamingException"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Product"%>
 <%@page import="userBeans.CartLocal"%>
@@ -13,10 +18,20 @@
         <title>Carrito</title>
     </head>
     <body>
+        <%!
+            public StatisticsLocal getStatisticsSingleton(HttpSession session, HttpServletRequest request) throws NamingException{
+                StatisticsLocal statistics = (StatisticsLocal )session.getAttribute("Statistics");
+                if (session.getAttribute("Statistics") == null){
+                    statistics = InitialContext.doLookup("java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/Statistics!userBeans.StatisticsLocal");
+                    session.setAttribute("Statistics", statistics);
+                }    
+                return statistics;
+            }
+        %> 
         <div w3-include-HTML="library/navbar.jsp"></div>
         <%
             CartLocal cart = (CartLocal) session.getAttribute("cart");
-            if (cart == null || cart.getProductList().isEmpty()){
+            if (cart == null || cart.getProducts().isEmpty()){
                 out.println("<div class=\"text-center bg-warning alert-warning\"><h1>El carrito se encuentra vacío.</h1></div>");
                 out.println("<form class=\"text-center\" action=\"FrontControllerServlet\">");
                 out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
@@ -24,7 +39,7 @@
                 out.println("</form><br>");
             }
             else{
-                List<Product> products = cart.getProductList();
+                HashMap<Product,Integer> products = cart.getProducts();
                 out.println("<div class=\"container\">");
                     out.println("<h2>Productos añadidos al carrito</h2>");
                     out.println("<table class=\"table table-hover\">");
@@ -33,15 +48,31 @@
                                 out.println("<th>IMAGEN</th>");
                                 out.println("<th>PRODUCTO</th>");
                                 out.println("<th>PRECIO</th>");
+                                out.println("<th>CANTIDAD</th>");
                                 out.println("<th>¿ELIMINAR?</th>");
                             out.println("</tr>");
                         out.println("</thead>");
                         out.println("<tbody>");
-                for (Product product: products){
+                for (Entry<Product,Integer> entry: products.entrySet()){
+                    Product product = entry.getKey();
+                    Integer quantity = entry.getValue();
                             out.println("<tr>");
                                 out.println("<td><img src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\" width=\"50\" height=\"50\"></td>");
                                 out.println("<td>" + product.getDescription() + "</td>");
                                 out.println("<td>" + product.getPurchaseCost() + "</td>");
+                                out.println("<td>");
+                                out.println("<form action=\"FrontControllerServlet\">");
+                                out.println("<input type=\"hidden\" name=\"command\" value=\"ModifyQuantityOfProduct\">");
+                                out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
+                                out.println("<input class=\"btn btn-delFromCart\" type=\"submit\" value=\"Eliminar del carrito\">");
+                                out.println("</form>");
+                                out.println("<p>" + quantity + "</p>");
+                                out.println("<form action=\"FrontControllerServlet\">");
+                                out.println("<input type=\"hidden\" name=\"command\" value=\"ModifyQuantityOfProduct\">");
+                                out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
+                                out.println("<input class=\"btn btn-delFromCart\" type=\"submit\" value=\"Eliminar del carrito\">");
+                                out.println("</form>");
+                                out.println("</td>");
                                 out.println("<td>");
                                     out.println("<form action=\"FrontControllerServlet\">");
                                     out.println("<input type=\"hidden\" name=\"command\" value=\"DelFromCartCommand\">");
@@ -81,6 +112,15 @@
             }
         %>    
         <div w3-include-HTML="library/footer.html"></div>
+        <%
+            StatisticsLocal statistics = getStatisticsSingleton(session, request);
+            if (session.isNew()){
+                statistics.incrementNumberOfUsersConnected();
+            }
+            out.println("<div class=\"text-center\">");
+            out.println("<p>Usuarios conectados: " + statistics.getNumberOfUsersConnected() + "</p>");
+            out.println("</div>");
+        %> 
         <script src="http://code.jquery.com/jquery.js"></script> 
         <script src="resources/js/bootstrap.js"></script>
         <script src="resources/js/w3-include-HTML.js"></script>

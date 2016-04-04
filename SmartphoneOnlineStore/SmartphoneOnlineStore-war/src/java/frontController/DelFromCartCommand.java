@@ -18,7 +18,7 @@ public class DelFromCartCommand extends FrontCommand{
             String productId = request.getParameter("productId");
             ProductFacadeLocal productFacade = (ProductFacadeLocal) InitialContext.doLookup(PRODUCT_JNDI_URL);
             Product product = productFacade.find(Integer.parseInt(productId));
-            if (cart.getProductList().contains(product)){
+            if (cart.getProducts().containsKey(product)){
                 cart.delFromCart(product);
                 /*product.setQuantityOnHand(product.getQuantityOnHand() - 1);
                 productFacade.edit(product);*/
