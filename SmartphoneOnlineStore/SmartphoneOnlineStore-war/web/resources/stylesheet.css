@@ -192,6 +192,18 @@ p{
     padding: 2em;
 }
 
+#decrementButton{
+    visibility: hidden;
+    height: 0em;
+    width: 0em;
+}
+
+#incrementButton{
+    visibility: hidden;
+    height: 0em;
+    width: 0em;
+}
+
 .bg1{
     background-color: orange;
 }
