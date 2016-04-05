@@ -47,8 +47,13 @@
                                 <label for="dni">DNI:
                                 <input type="text" class="form-control" id="dni"></label>
                             </div>
-                            <input type="submit" class="btn btn-default" value="Siguiente">
-                         </form>
+                            <div class="bg-info info"><p>Se aplicará el IGIC (7%) al total de la factura.</p></div>
+                            <input type="submit" class="btn btn-purchase" value="Seguir">
+                        </form><br>
+                        <form action="FrontControllerServlet">
+                            <input type="hidden" name="command" value="ViewCartCommand">
+                            <input type="submit" class="btn btn-danger" value="Cancelar">
+                        </form>
                     </td>
                 </tr>
             </tbody>

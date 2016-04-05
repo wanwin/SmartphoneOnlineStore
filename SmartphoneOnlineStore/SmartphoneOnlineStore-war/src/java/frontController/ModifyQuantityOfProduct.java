@@ -27,7 +27,7 @@ public class ModifyQuantityOfProduct extends FrontCommand{
                 for (Entry<Product,Integer> entry : products.entrySet()) {
                     Product product = entry.getKey();
                     Integer quantity = entry.getValue();
-                    if (product.getProductId() == Integer.parseInt(requestedProductId) && (quantity - 1) >= 1){
+                    if (product.getProductId() == Integer.parseInt(requestedProductId) && (quantity - 1) >= 0){
                         products.put(product, quantity - 1);
                     }
                 }    
