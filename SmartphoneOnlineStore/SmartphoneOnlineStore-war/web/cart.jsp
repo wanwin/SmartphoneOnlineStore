@@ -1,3 +1,4 @@
+<%@page import="java.util.concurrent.ConcurrentHashMap"%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="javax.naming.InitialContext"%>
@@ -39,7 +40,7 @@
                 out.println("</form><br>");
             }
             else{
-                HashMap<Product,Integer> products = cart.getProducts();
+                ConcurrentHashMap<Product,Integer> products = cart.getProducts();
                 out.println("<div class=\"container\">");
                     out.println("<h2>Productos añadidos al carrito</h2>");
                     out.println("<table class=\"table table-hover\">");
@@ -57,16 +58,16 @@
                     Product product = entry.getKey();
                     Integer quantity = entry.getValue();
                             out.println("<tr>");
-                                out.println("<td><img src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\" width=\"50\" height=\"50\"></td>");
+                                out.println("<td><img src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\" width=\"50\" height=\"50\" alt=\"foto\"></td>");
                                 out.println("<td>" + product.getDescription() + "</td>");
                                 out.println("<td>" + product.getPurchaseCost() + "</td>");
                                 
                                 out.println("<td>");
-                                    out.println("<p><form action=\"FrontControllerServlet\">");
+                                    out.println("<form action=\"FrontControllerServlet\">");
                                     out.println("<input type=\"hidden\" name=\"command\" value=\"ModifyQuantityOfProduct\">");
                                     out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
-                                    out.println("<input id=\"decrementButton\" name=\"decrementButton\" type=\"submit\">");
-                                    out.println("<label for=\"decrementButton\" class=\"btn\"><i class=\"glyphicon glyphicon-minus\"></i></label>");
+                                    out.println("<input class=\"decrementButton\" name=\"decrementButton\" value=\"Decrementar cantidad\" type=\"submit\">");
+                                    //out.println("<label for=\"decrementButton\" class=\"btn\"><i class=\"glyphicon glyphicon-minus\"></i></label>");
                                     out.println("</form>");
                                 out.println("</td>");
                                 out.println("<td>");
@@ -76,15 +77,15 @@
                                     out.println("<form action=\"FrontControllerServlet\">");
                                     out.println("<input type=\"hidden\" name=\"command\" value=\"ModifyQuantityOfProduct\">");
                                     out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
-                                    out.println("<input id=\"incrementButton\" name=\"incrementButton\" type=\"submit\">");
-                                    out.println("<label for=\"incrementButton\" class=\"btn\"><i class=\"glyphicon glyphicon-plus\"></i></label>");
-                                    out.println("</form></p>");
+                                    out.println("<input class=\"incrementButton\" name=\"incrementButton\" value=\"Incrementar cantidad\" type=\"submit\">");
+                                    //out.println("<label for=\"incrementButton\" class=\"btn\"><i class=\"glyphicon glyphicon-plus\"></i></label>");
+                                    out.println("</form>");
                                 out.println("</td>");
                                 
                                 out.println("<td>");
                                     out.println("<form action=\"FrontControllerServlet\">");
                                     out.println("<input type=\"hidden\" name=\"command\" value=\"DelFromCartCommand\">");
-                                    out.println("<input type=\"hidden\" name=\"product\" value=" + product.getProductId() + ">");
+                                    out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
                                     out.println("<input class=\"btn btn-delFromCart\" type=\"submit\" value=\"Eliminar del carrito\">");
                                     out.println("</form>");
                                 out.println("</td>");
@@ -113,7 +114,6 @@
                                     out.println("</form>");
                                 out.println("</td>");
                             out.println("</tr>");
-                        out.println("</tbody>");
                         out.println("</tbody>");
                     out.println("</table>");
                 out.println("</div>");

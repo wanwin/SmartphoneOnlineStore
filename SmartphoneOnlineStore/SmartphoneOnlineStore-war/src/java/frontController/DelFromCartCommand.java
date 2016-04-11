@@ -1,10 +1,9 @@
 package frontController;
 
-import controller.ProductFacadeLocal;
 import entity.Product;
-import static frontController.FrontCommand.CART_PATH;
 import java.io.IOException;
-import javax.naming.InitialContext;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import userBeans.CartLocal;
@@ -14,20 +13,21 @@ public class DelFromCartCommand extends FrontCommand{
     @Override
     public void process(){
         try {
+            String requestedProductId = request.getParameter("productId");
             CartLocal cart = initCart();
-            String productId = request.getParameter("productId");
-            ProductFacadeLocal productFacade = (ProductFacadeLocal) InitialContext.doLookup(PRODUCT_JNDI_URL);
-            Product product = productFacade.find(Integer.parseInt(productId));
-            if (cart.getProducts().containsKey(product)){
-                cart.delFromCart(product);
-                /*product.setQuantityOnHand(product.getQuantityOnHand() - 1);
-                productFacade.edit(product);*/
-            }
-            try {
-                forward(CART_PATH);
-            } catch (ServletException | IOException ex) {
+            ConcurrentHashMap<Product,Integer> products = cart.getProducts();
+            for (Map.Entry<Product,Integer> entry : products.entrySet()) {
+                Product product = entry.getKey();
+                Integer productId = Integer.parseInt(requestedProductId);
+                if (product.getProductId().equals(productId)){
+                    cart.delFromCart(product);
+                    try {
+                        forward(CART_PATH);
+                    } catch (ServletException | IOException ex) {
+                    }
+                }
             }
         } catch (NamingException ex) {
         }
-    }
+    }    
 }

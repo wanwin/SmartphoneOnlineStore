@@ -1,5 +1,5 @@
+<%@page import="java.util.concurrent.ConcurrentHashMap"%>
 <%@page import="java.util.Map.Entry"%>
-<%@page import="java.util.HashMap"%>
 <%@page import="entity.Product"%>
 <%@page import="userBeans.CartLocal"%>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -28,7 +28,7 @@
                             if (cart == null){
                                 out.println("<input id=\"cartButton0\" type=\"submit\" value=\"\">");
                             }else{
-                                HashMap<Product,Integer> products = cart.getProducts();
+                                ConcurrentHashMap<Product,Integer> products = cart.getProducts();
                                 Integer numberOfProductsInCart = 0; 
                                 for (Entry<Product,Integer> entry: products.entrySet()){
                                     Integer quantity = entry.getValue();

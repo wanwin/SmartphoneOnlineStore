@@ -3,12 +3,10 @@ package frontController;
 import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
-import javax.servlet.jsp.JspWriter;
 
 public class PurchaseCommand extends FrontCommand{
 
@@ -16,7 +14,7 @@ public class PurchaseCommand extends FrontCommand{
     public void process() {
         response.setContentType("text/html;charset=UTF-8");
         try(PrintWriter out = response.getWriter()){
-            HashMap<Product, Integer> products = initCart().getProducts();
+            ConcurrentHashMap<Product, Integer> products = initCart().getProducts();
             out.println("<!DOCTYPE html>\n" +
 "<html>\n" +
 "    <head>\n" +

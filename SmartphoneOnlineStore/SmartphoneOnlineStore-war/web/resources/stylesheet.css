@@ -192,17 +192,6 @@ p{
     padding: 2em;
 }
 
-#decrementButton{
-    visibility: hidden;
-    height: 0em;
-    width: 0em;
-}
-
-#incrementButton{
-    visibility: hidden;
-    height: 0em;
-    width: 0em;
-}
 
 .bg1{
     background-color: orange;
@@ -279,6 +268,19 @@ p{
     outline:none;
     color: black;            
 }
+
+/*.decrementButton{
+    visibility: hidden;
+    height: 0em;
+    width: 0em;
+}*/
+
+/*.incrementButton{
+    visibility: hidden;
+    height: 0em;
+    width: 0em;
+}*/
+
 /*#borrar img {
     height: calc(100vh - 50px);
     width: 100%;

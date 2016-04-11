@@ -3,14 +3,13 @@
 <%@page import="java.util.Iterator"%>
 <%@page import="entity.Manufacturer"%>
 <%@page import="java.io.IOException"%>
-<%@page import="java.util.HashSet"%>
 <%@page import="entity.Product"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="controller.ProductFacade"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

@@ -1,8 +1,8 @@
 package userBeans;
 
 import entity.Product;
-import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.servlet.http.HttpSession;
@@ -10,10 +10,10 @@ import javax.servlet.http.HttpSession;
 @Stateful
 public class Cart implements CartLocal {
 
-    private final HashMap<Product,Integer> products = new HashMap<>();
+    private final ConcurrentHashMap<Product,Integer> products = new ConcurrentHashMap<>();
     
     @Override
-    public HashMap<Product,Integer> getProducts() {
+    public ConcurrentHashMap<Product,Integer> getProducts() {
         return products;
     }
     

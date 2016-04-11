@@ -1,7 +1,7 @@
 package userBeans;
 
 import entity.Product;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.ejb.Local;
 import javax.servlet.http.HttpSession;
 
@@ -11,7 +11,7 @@ public interface CartLocal {
     public void addToCart(Product product);
     public void delFromCart(Product product);
     public void finishPurchase(HttpSession session);
-    public HashMap<Product,Integer> getProducts();
+    public ConcurrentHashMap<Product,Integer> getProducts();
 }
 
 
