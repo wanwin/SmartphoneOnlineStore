@@ -32,6 +32,7 @@
         <div w3-include-HTML="library/navbar.jsp"></div>
         <%
             CartLocal cart = (CartLocal) session.getAttribute("cart");
+            boolean areThereAnyErrors = false;
             if (cart == null || cart.getProducts().isEmpty()){
                 out.println("<div class=\"text-center bg-warning alert-warning\"><h1>El carrito se encuentra vacío.</h1></div>");
                 out.println("<form class=\"text-center\" action=\"FrontControllerServlet\">");
@@ -43,6 +44,14 @@
                 ConcurrentHashMap<Product,Integer> products = cart.getProducts();
                 out.println("<div class=\"container\">");
                     out.println("<h2>Productos añadidos al carrito</h2>");
+                    for (Entry<Product,Integer> entry: products.entrySet()){
+                        Product product = entry.getKey();
+                        Integer quantity = entry.getValue();
+                        if(quantity > product.getQuantityOnHand()){
+                            areThereAnyErrors = true;
+                            out.println("<div class=\"text-center bg-danger alert-danger\"><h2>No hay unidades suficientes para el producto " + product.getManufacturerId().getName()+ " " + product.getDescription() + "</h2></div>");
+                        }
+                    }
                     out.println("<table class=\"table table-hover\">");
                         out.println("<thead>");
                             out.println("<tr>");
@@ -110,7 +119,12 @@
                                 out.println("<td colspan=\"1\" style=\"text-align:center\">");
                                     out.println("<form action=\"purchase.jsp\">");
                                     out.println("<input type=\"hidden\" name=\"command\" value=\"Purchase\">");
-                                    out.println("<input class=\"btn btn-purchase\" type=\"submit\" value=\"Finalizar Compra\">");
+                                    if (areThereAnyErrors){
+                                        out.println("<input class=\"btn disabled\" value=\"Finalizar compra\">");
+                                    }
+                                    else{
+                                        out.println("<input class=\"btn btn-purchase\" type=\"submit\" value=\"Finalizar Compra\">");
+                                    }
                                     out.println("</form>");
                                 out.println("</td>");
                             out.println("</tr>");
