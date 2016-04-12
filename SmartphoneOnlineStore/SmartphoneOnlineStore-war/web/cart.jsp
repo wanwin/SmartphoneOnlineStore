@@ -123,7 +123,7 @@
                                         out.println("<input class=\"btn disabled\" value=\"Finalizar compra\">");
                                     }
                                     else{
-                                        out.println("<input class=\"btn btn-purchase\" type=\"submit\" value=\"Finalizar Compra\">");
+                                        out.println("<input class=\"btn btn-purchase\" type=\"submit\" value=\"Tramitar Pedido\">");
                                     }
                                     out.println("</form>");
                                 out.println("</td>");

@@ -269,6 +269,15 @@ p{
     color: black;            
 }
 
+#minusPlusButton{
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    padding: 2em;
+}
+
 /*.decrementButton{
     visibility: hidden;
     height: 0em;

@@ -37,22 +37,22 @@
                             <input type="hidden" name="command" value="PurchaseCommand">
                             <div class="form-group">
                                 <label for="name">Nombre:
-                                <input type="text" class="form-control" id="name"></label>
+                                <input type="text" class="form-control" id="name" required/></label>
                             </div>
                             <div class="form-group">
                                 <label for="surname">Apellidos:
-                                <input type="text" class="form-control" id="surname"></label>
+                                <input type="text" class="form-control" id="surname" required/></label>
                             </div>
                             <div class="form-group">
                                 <label for="dni">DNI:
-                                <input type="text" class="form-control" id="dni"></label>
+                                <input type="text" class="form-control" id="dni" required/></label>
                             </div>
                             <div class="bg-info info"><p>Se aplicará el IGIC (7%) al total de la factura.</p></div>
-                            <input type="submit" class="btn btn-purchase" value="Seguir">
+                            <input type="submit" class="btn btn-purchase" value="Finalizar Compra">
                         </form><br>
                         <form action="FrontControllerServlet">
                             <input type="hidden" name="command" value="ViewCartCommand">
-                            <input type="submit" class="btn btn-danger" value="Cancelar">
+                            <input type="submit" class="btn btn-danger" value="Volver">
                         </form>
                     </td>
                 </tr>
