@@ -7,22 +7,19 @@ package entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,8 +40,8 @@ public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "PRODUCT_ID")
     private Integer productId;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -60,14 +57,9 @@ public class Product implements Serializable {
     @Size(max = 50)
     @Column(name = "DESCRIPTION")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
-    private Collection<PurchaseOrder> purchaseOrderCollection;
     @JoinColumn(name = "MANUFACTURER_ID", referencedColumnName = "MANUFACTURER_ID")
     @ManyToOne(optional = false)
     private Manufacturer manufacturerId;
-    @JoinColumn(name = "PRODUCT_CODE", referencedColumnName = "PROD_CODE")
-    @ManyToOne(optional = false)
-    private ProductCode productCode;
 
     public Product() {
     }
@@ -111,7 +103,7 @@ public class Product implements Serializable {
     public String getAvailable() {
         return available;
     }
-    
+
     public void setAvailable(String available) {
         this.available = available;
     }
@@ -124,29 +116,12 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    @XmlTransient
-    public Collection<PurchaseOrder> getPurchaseOrderCollection() {
-        return purchaseOrderCollection;
-    }
-
-    public void setPurchaseOrderCollection(Collection<PurchaseOrder> purchaseOrderCollection) {
-        this.purchaseOrderCollection = purchaseOrderCollection;
-    }
-
     public Manufacturer getManufacturerId() {
         return manufacturerId;
     }
 
     public void setManufacturerId(Manufacturer manufacturerId) {
         this.manufacturerId = manufacturerId;
-    }
-
-    public ProductCode getProductCode() {
-        return productCode;
-    }
-
-    public void setProductCode(ProductCode productCode) {
-        this.productCode = productCode;
     }
 
     @Override

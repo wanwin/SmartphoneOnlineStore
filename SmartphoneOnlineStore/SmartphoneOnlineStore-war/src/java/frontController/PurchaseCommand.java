@@ -2,8 +2,12 @@ package frontController;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import controller.CustomerFacadeLocal;
 import controller.ProductFacadeLocal;
+import controller.PurchaseOrderFacadeLocal;
+import entity.Customer;
 import entity.Product;
+import entity.PurchaseOrder;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,17 +15,19 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import userBeans.CartLocal;
 public class PurchaseCommand extends FrontCommand{
+    
     Document document = new Document();
     
     @Override
     public void process() {
         response.setContentType("text/html;charset=UTF-8");
+        String dni = request.getParameter("dni");
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
         try(PrintWriter out = response.getWriter()){
             CartLocal cart = initCart();
             ConcurrentHashMap<Product, Integer> products = cart.getProducts();
@@ -32,18 +38,42 @@ public class PurchaseCommand extends FrontCommand{
                 product.setQuantityOnHand(product.getQuantityOnHand() - quantity);
                 productFacade.edit(product);
             }
+            CustomerFacadeLocal customerFacade = InitialContext.doLookup(CUSTOMER_JNDI_URL);
+            PurchaseOrderFacadeLocal purchaseOrderFacade = InitialContext.doLookup(PURCHASE_ORDER_JNDI_URL);
+            Customer customer = customerFacade.find(dni);
+            if (isCustomerInDB(customer)){
+                customerFacade.create(createCustomer(dni, name, surname));
+            }
+            createPurchaseOrder(cart, customer, purchaseOrderFacade);
             openPDF();
             createCompanyHead("../../web/resources/img/logo_horizontal.png", 
                     "Movilazos SL", "B35.258.951", "Las Palmas de Gran Canaria", "928 928 928");
-            createClientHead("NombreCliente", "4585726", "C/La Que Sea", "928 456 654");
+            createClientHead(customer.getName(), customer.getCustomerId(), "C/Desengaño 21", "928 456 654");
             createTable(3, products);
-            closePDF();
             products.clear();
+            closePDF();
             out.println("he llegado");
-        } catch (IOException | NamingException ex) {
-        } catch (DocumentException ex) {
-            Logger.getLogger(PurchaseCommand.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | NamingException | DocumentException ex) {
         }
+    }
+
+    private boolean isCustomerInDB(Customer customer) {
+        return customer == null;
+    }
+    
+    private Customer createCustomer(String dni, String name, String surname) throws NumberFormatException {
+        Customer customer = new Customer(dni);
+        customer.setName(name);
+        customer.setSurname(surname);
+        return customer;
+    }
+    
+    private void createPurchaseOrder(CartLocal cart, Customer customer, PurchaseOrderFacadeLocal purchaseOrderFacade) {
+        PurchaseOrder purchaseOrder = new PurchaseOrder();
+        Float purchaseCost = cart.calculateTotal();
+        purchaseOrder.setCustomerId(customer);
+        purchaseOrder.setPurchaseCost(purchaseCost.doubleValue());
+        purchaseOrderFacade.create(purchaseOrder);
     }
     
     public void createCompanyHead(String logo, String name, String cif, String location, String phone) throws DocumentException{
@@ -56,6 +86,7 @@ public class PurchaseCommand extends FrontCommand{
         addParagraph(phone, Chunk.ALIGN_LEFT);
     }
     
+    
     public void createClientHead(String name, String dni, String direction, String phone) throws DocumentException{
         addParagraph(name, Chunk.ALIGN_RIGHT);
         addParagraph(dni, Chunk.ALIGN_RIGHT);
@@ -66,7 +97,8 @@ public class PurchaseCommand extends FrontCommand{
     }
     
     public void openPDF() throws FileNotFoundException, DocumentException{
-        FileOutputStream pdf = new FileOutputStream("/home/evelin/Escritorio/Factura.pdf");
+        //FileOutputStream pdf = new FileOutputStream("/home/evelin/Escritorio/Factura.pdf");
+        FileOutputStream pdf = new FileOutputStream("C:\\Users\\Darwin\\Desktop\\Factura.pdf");
         PdfWriter.getInstance(document,pdf).setInitialLeading(20);
         document.open();
     }
@@ -101,25 +133,26 @@ public class PurchaseCommand extends FrontCommand{
         document.add(finalTable);
     }
 
-    private double printTableOfProducts(ConcurrentHashMap<Product, Integer> products, PdfPTable productsTable, double subtotal) {
-        for (Entry<Product, Integer> entry : products.entrySet()) {
-            Product product = entry.getKey();
-            Integer quantity = entry.getValue();
-            productsTable.addCell(product.getDescription());
-            productsTable.addCell("" + product.getPurchaseCost().floatValue() + "");
-            productsTable.addCell("" + quantity.intValue() + "");
-            if (quantity.intValue() > 1){
-                subtotal += product.getPurchaseCost().floatValue() * quantity.intValue();
-            }else subtotal += product.getPurchaseCost().floatValue();
-        }
-        return subtotal;
-    }
-
     private void printHeadOfTableOfProducts(PdfPTable productsTable) {
         productsTable.addCell("Producto");
         productsTable.addCell("Precio");
         productsTable.addCell("Unidades");
     }
+    
+    private double printTableOfProducts(ConcurrentHashMap<Product, Integer> products, PdfPTable productsTable, double subtotal) {
+        for (Entry<Product, Integer> entry : products.entrySet()) {
+            Product product = entry.getKey();
+            Integer quantity = entry.getValue();
+            productsTable.addCell(product.getManufacturerId().getName() + " " + product.getDescription());
+            productsTable.addCell("" + product.getPurchaseCost().floatValue() + "");
+            productsTable.addCell("" + quantity + "");
+            if (quantity > 1){
+                subtotal += product.getPurchaseCost().floatValue() * quantity;
+            }else subtotal += product.getPurchaseCost().floatValue();
+        }
+        return subtotal;
+    }
+
 
     private void printFinalTable(PdfPTable finalTable, double subtotal, DecimalFormat df, double total) {
         finalTable.addCell("Subtotal");

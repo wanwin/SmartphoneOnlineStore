@@ -37,15 +37,15 @@
                             <input type="hidden" name="command" value="PurchaseCommand">
                             <div class="form-group">
                                 <label for="name">Nombre:
-                                <input type="text" class="form-control" id="name" required/></label>
+                                <input type="text" class="form-control" name="name" id="name" required/></label>
                             </div>
                             <div class="form-group">
                                 <label for="surname">Apellidos:
-                                <input type="text" class="form-control" id="surname" required/></label>
+                                <input type="text" class="form-control" name="surname" id="surname" required/></label>
                             </div>
                             <div class="form-group">
                                 <label for="dni">DNI:
-                                <input type="text" class="form-control" id="dni" required/></label>
+                                <input type="text" class="form-control" name="dni" id="dni" required/></label>
                             </div>
                             <div class="bg-info info"><p>Se aplicará el IGIC (7%) al total de la factura.</p></div>
                             <input type="submit" class="btn btn-purchase" value="Finalizar Compra">

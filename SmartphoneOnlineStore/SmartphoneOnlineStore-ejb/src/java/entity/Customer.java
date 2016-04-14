@@ -12,8 +12,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -48,8 +46,9 @@ public class Customer implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 9)
     @Column(name = "CUSTOMER_ID")
-    private Integer customerId;
+    private String customerId;
     @Size(max = 30)
     @Column(name = "NAME")
     private String name;
@@ -79,27 +78,24 @@ public class Customer implements Serializable {
     private String email;
     @Column(name = "CREDIT_LIMIT")
     private Integer creditLimit;
+    @Size(max = 30)
+    @Column(name = "SURNAME")
+    private String surname;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
     private Collection<PurchaseOrder> purchaseOrderCollection;
-    @JoinColumn(name = "DISCOUNT_CODE", referencedColumnName = "DISCOUNT_CODE")
-    @ManyToOne(optional = false)
-    private DiscountCode discountCode;
-    @JoinColumn(name = "ZIP", referencedColumnName = "ZIP_CODE")
-    @ManyToOne(optional = false)
-    private MicroMarket zip;
 
     public Customer() {
     }
 
-    public Customer(Integer customerId) {
+    public Customer(String customerId) {
         this.customerId = customerId;
     }
 
-    public Integer getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Integer customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 
@@ -174,7 +170,15 @@ public class Customer implements Serializable {
     public void setCreditLimit(Integer creditLimit) {
         this.creditLimit = creditLimit;
     }
+    
+    public String getSurmame() {
+        return surname;
+    }
 
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+    
     @XmlTransient
     public Collection<PurchaseOrder> getPurchaseOrderCollection() {
         return purchaseOrderCollection;
@@ -182,22 +186,6 @@ public class Customer implements Serializable {
 
     public void setPurchaseOrderCollection(Collection<PurchaseOrder> purchaseOrderCollection) {
         this.purchaseOrderCollection = purchaseOrderCollection;
-    }
-
-    public DiscountCode getDiscountCode() {
-        return discountCode;
-    }
-
-    public void setDiscountCode(DiscountCode discountCode) {
-        this.discountCode = discountCode;
-    }
-
-    public MicroMarket getZip() {
-        return zip;
-    }
-
-    public void setZip(MicroMarket zip) {
-        this.zip = zip;
     }
 
     @Override

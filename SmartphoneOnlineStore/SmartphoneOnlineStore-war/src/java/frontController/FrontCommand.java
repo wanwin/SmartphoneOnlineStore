@@ -12,11 +12,13 @@ import javax.servlet.http.HttpSession;
 import userBeans.CartLocal;
 
 abstract class FrontCommand {
-    protected static final String CART_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/Cart!userBeans.CartLocal";
-    protected static final String CART_PATH = "/cart.jsp";
-    protected static final String PRODUCTS_PATH = "/products.jsp";
     protected static final String PRODUCT_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ProductFacade!controller.ProductFacadeLocal";
+    protected static final String CART_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/Cart!userBeans.CartLocal";
     protected static final String MANUFACTURER_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ManufacturerFacade!controller.ManufacturerFacadeLocal";
+    protected static final String PURCHASE_ORDER_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/PurchaseOrderFacade!controller.PurchaseOrderFacadeLocal";
+    protected static final String CUSTOMER_JNDI_URL = "java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/CustomerFacade!controller.CustomerFacadeLocal";
+    protected static final String PRODUCTS_PATH = "/products.jsp";
+    protected static final String CART_PATH = "/cart.jsp";
     
     protected ServletContext context;
     protected HttpServletRequest request;
