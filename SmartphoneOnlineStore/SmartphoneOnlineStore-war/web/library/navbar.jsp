@@ -18,8 +18,9 @@
                 <li><a href="index.jsp">INICIO</a></li>
                 <li><form action="FrontControllerServlet">
                         <input type="hidden" name="command" value="FindProductCommand">
-                        <input id="transparentButton" type="submit" value="PRODUCTOS">
+                        <input class="transparentButton" type="submit" value="PRODUCTOS">
                     </form></li>
+                <li><a href="previousPurchasesForm.jsp">VER COMPRAS ANTERIORES</a></li>
                 <li><a href="contact.jsp">CONTACTAR</a></li>
                 <li><form action="FrontControllerServlet">
                         <input type="hidden" name="command" value="ViewCartCommand">

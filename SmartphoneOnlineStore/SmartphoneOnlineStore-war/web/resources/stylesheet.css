@@ -8,22 +8,6 @@ p{
     color: black;
 }
 
-#transparentButton{
-    background-color: Transparent;
-    background-repeat:no-repeat;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;
-    color: gray;
-    padding-top: 2em;
-}
-
-
-#transparentButton:hover{
-    color: black;
-}
-
 #cartButton0{
     background-image: url("img/carrito0.png");    
     background-repeat: no-repeat;
@@ -192,6 +176,21 @@ p{
     padding: 2em;
 }
 
+.transparentButton{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: gray;
+    padding-top: 2em;
+}
+
+
+.transparentButton:hover{
+    color: black;
+}
 
 .bg1{
     background-color: orange;

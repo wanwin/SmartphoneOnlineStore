@@ -11,12 +11,14 @@ import entity.PurchaseOrder;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletException;
 import userBeans.CartLocal;
 public class PurchaseCommand extends FrontCommand{
     
@@ -41,8 +43,9 @@ public class PurchaseCommand extends FrontCommand{
             CustomerFacadeLocal customerFacade = InitialContext.doLookup(CUSTOMER_JNDI_URL);
             PurchaseOrderFacadeLocal purchaseOrderFacade = InitialContext.doLookup(PURCHASE_ORDER_JNDI_URL);
             Customer customer = customerFacade.find(dni);
-            if (isCustomerInDB(customer)){
-                customerFacade.create(createCustomer(dni, name, surname));
+            if (!isCustomerInDB(customer)){
+                customer = createCustomer(dni, name, surname);
+                customerFacade.create(customer);
             }
             createPurchaseOrder(cart, customer, purchaseOrderFacade);
             openPDF();
@@ -52,13 +55,16 @@ public class PurchaseCommand extends FrontCommand{
             createTable(3, products);
             products.clear();
             closePDF();
-            out.println("he llegado");
+            try {
+                forward(PURCHASE_FINISHED_PATH);
+            } catch (ServletException ex) {
+            }
         } catch (IOException | NamingException | DocumentException ex) {
         }
     }
 
     private boolean isCustomerInDB(Customer customer) {
-        return customer == null;
+        return customer != null;
     }
     
     private Customer createCustomer(String dni, String name, String surname) throws NumberFormatException {
@@ -68,11 +74,17 @@ public class PurchaseCommand extends FrontCommand{
         return customer;
     }
     
-    private void createPurchaseOrder(CartLocal cart, Customer customer, PurchaseOrderFacadeLocal purchaseOrderFacade) {
+    private void createPurchaseOrder(CartLocal cart, Customer customer, PurchaseOrderFacadeLocal purchaseOrderFacade) throws FileNotFoundException, IOException{
         PurchaseOrder purchaseOrder = new PurchaseOrder();
+        ConcurrentHashMap<Product, Integer> products = cart.getProducts();
         Float purchaseCost = cart.calculateTotal();
         purchaseOrder.setCustomerId(customer);
         purchaseOrder.setPurchaseCost(purchaseCost.doubleValue());
+        FileOutputStream fileOutputStream = new FileOutputStream("products.ser");
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(products);
+        fileOutputStream.close();
+        purchaseOrder.setProducts(products);
         purchaseOrderFacade.create(purchaseOrder);
     }
     

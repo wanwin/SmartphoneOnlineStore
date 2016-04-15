@@ -5,7 +5,6 @@
 <%@page import="java.io.IOException"%>
 <%@page import="entity.Product"%>
 <%@page import="java.util.List"%>
-<%@page import="java.util.List"%>
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="controller.ProductFacade"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>

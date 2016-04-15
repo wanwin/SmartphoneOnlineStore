@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -60,6 +61,9 @@ public class PurchaseOrder implements Serializable {
     @Size(max = 30)
     @Column(name = "FREIGHT_COMPANY")
     private String freightCompany;
+    @Lob
+    @Column(name = "PRODUCTS")
+    private Serializable products;
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
     @ManyToOne(optional = false)
     private Customer customerId;
@@ -117,6 +121,14 @@ public class PurchaseOrder implements Serializable {
 
     public void setFreightCompany(String freightCompany) {
         this.freightCompany = freightCompany;
+    }
+
+    public Serializable getProducts() {
+        return products;
+    }
+
+    public void setProducts(Serializable products) {
+        this.products = products;
     }
 
     public Customer getCustomerId() {

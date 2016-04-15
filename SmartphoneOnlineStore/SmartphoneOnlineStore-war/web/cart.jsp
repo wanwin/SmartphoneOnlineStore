@@ -1,10 +1,8 @@
 <%@page import="java.util.concurrent.ConcurrentHashMap"%>
 <%@page import="java.util.Map.Entry"%>
-<%@page import="java.util.HashMap"%>
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="userBeans.StatisticsLocal"%>
 <%@page import="javax.naming.NamingException"%>
-<%@page import="java.util.List"%>
 <%@page import="entity.Product"%>
 <%@page import="userBeans.CartLocal"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -68,7 +66,7 @@
                     Integer quantity = entry.getValue();
                             out.println("<tr>");
                                 out.println("<td><img src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\" width=\"50\" height=\"50\" alt=\"foto\"></td>");
-                                out.println("<td>" + product.getDescription() + "</td>");
+                                out.println("<td>" + product.getManufacturerId().getName() + " " + product.getDescription() + "</td>");
                                 out.println("<td>" + product.getPurchaseCost() + "</td>");
                                 
                                 out.println("<td>");
