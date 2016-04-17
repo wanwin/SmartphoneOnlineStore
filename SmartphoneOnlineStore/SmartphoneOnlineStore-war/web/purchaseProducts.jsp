@@ -1,16 +1,9 @@
-<%-- 
-    Document   : previousPurchases
-    Created on : 15-abr-2016, 4:13:23
-    Author     : Darwin
---%>
-
-<%@page import="entity.PurchaseOrder"%>
-<%@page import="java.util.Map.Entry"%>
-<%@page import="java.util.List"%>
-<%@page import="entity.Product"%>
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="userBeans.StatisticsLocal"%>
 <%@page import="javax.naming.NamingException"%>
+<%@page import="java.util.concurrent.ConcurrentHashMap"%>
+<%@page import="java.util.Map.Entry"%>
+<%@page import="entity.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="resources/css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="resources/stylesheet.css" rel="stylesheet" media="screen">
-        <title>Historial de compras</title>
+        <title>Productos de la compra</title>
     </head>
     <body>
         <%!
@@ -32,39 +25,31 @@
                 }    
                 return statistics;
             }
-        %> 
-        <%
-            List<PurchaseOrder> purchases = (List<PurchaseOrder>)request.getAttribute("purchases");
-            if (purchases == null){
-                out.println("<h1 class=\"bg-warning warning\"></h1>");
-            }
-            else{
-                out.println("<table class=\"table table-hover\">");
-                    out.println("<thead>");
-                        out.println("<tr>");
-                            out.println("<th>HORA DEL PEDIDO</th>");
-                            out.println("<th>ACCIÓN</th>");
-                        out.println("</tr>");
-                    out.println("</thead>");
-                    out.println("<tbody>");
-                for (PurchaseOrder purchase: purchases) {
-                    out.println("<tr>");
-                        out.println("<td>" + purchase.getSalesDate().toString() + "</td>");
-                        out.println("<td>");
-                        out.println("<form action=\"FrontControllerServlet\">" +
-                                        "<input type=\"hidden\" name=\"command\" value=\"SearchPurchaseProductsCommand\">" +
-                                        "<input type=\"hidden\" name=\"orderNum\" value=" + purchase.getOrderNum() + ">" +
-                                        "<input type=\"submit\" value=\"Ver productos\">" +
-                                
-                                    "</form>");
-                        out.println("</td>");
-                    out.println("</tr>");
-                }
-                    out.println("</tbody>");
-                out.println("</table>");
-            }
         %>
         <div w3-include-HTML="library/navbar.jsp"></div>
+        <%
+            ConcurrentHashMap<Product,Integer> products = (ConcurrentHashMap<Product,Integer>) request.getAttribute("purchaseProducts");
+            out.println("<table class=\"table table-hover\">");
+                    out.println("<thead>");
+                        out.println("<tr>");
+                            out.println("<th>PRODUCTO</th>");
+                            out.println("<th>PRECIO</th>");
+                            out.println("<th colspan=\"3\">CANTIDAD</th>");
+                            out.println("</tr>");
+                    out.println("</thead>");
+                    out.println("<tbody>");
+                for (Entry<Product,Integer> entry: products.entrySet()) {
+                        Product product = entry.getKey();
+                        Integer quantity = entry.getValue();
+                        out.println("<tr>");
+                            out.println("<td>" + product.getManufacturerId().getName() + " " + product.getDescription() + "</td>");
+                            out.println("<td>" + product.getPurchaseCost() + "</td>");   
+                            out.println("<td>" + quantity + "</td>");   
+                        out.println("</tr>");
+                }
+                    out.println("</tbody>");
+            out.println("</table>");
+        %>
         <div w3-include-HTML="library/footer.html"></div>
         <%
             StatisticsLocal statistics = getStatisticsSingleton(session, request);
@@ -74,7 +59,7 @@
             out.println("<div class=\"text-center\">");
             out.println("<p>Usuarios conectados: " + statistics.getNumberOfUsersConnected() + "</p>");
             out.println("</div>");
-        %>
+        %> 
         <script src="http://code.jquery.com/jquery.js"></script> 
         <script src="resources/js/bootstrap.js"></script>
         <script src="resources/js/w3-include-HTML.js"></script>

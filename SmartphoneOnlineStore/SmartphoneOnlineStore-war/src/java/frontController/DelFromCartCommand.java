@@ -21,13 +21,11 @@ public class DelFromCartCommand extends FrontCommand{
                 Integer productId = Integer.parseInt(requestedProductId);
                 if (product.getProductId().equals(productId)){
                     cart.delFromCart(product);
-                    try {
-                        forward(CART_PATH);
-                    } catch (ServletException | IOException ex) {
-                    }
+                    forward(CART_PATH);
                 }
             }
-        } catch (NamingException ex) {
-        }
-    }    
+        } 
+        catch (NamingException | ServletException | IOException ex) {
+        } 
+    }
 }

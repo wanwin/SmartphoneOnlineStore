@@ -8,6 +8,7 @@ import controller.PurchaseOrderFacadeLocal;
 import entity.Customer;
 import entity.Product;
 import entity.PurchaseOrder;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,6 +17,8 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -55,11 +58,9 @@ public class PurchaseCommand extends FrontCommand{
             createTable(3, products);
             products.clear();
             closePDF();
-            try {
-                forward(PURCHASE_FINISHED_PATH);
-            } catch (ServletException ex) {
-            }
-        } catch (IOException | NamingException | DocumentException ex) {
+            forward(PURCHASE_FINISHED_PATH);
+        } 
+        catch (NamingException | IOException | DocumentException | ServletException ex) {
         }
     }
 
@@ -80,11 +81,8 @@ public class PurchaseCommand extends FrontCommand{
         Float purchaseCost = cart.calculateTotal();
         purchaseOrder.setCustomerId(customer);
         purchaseOrder.setPurchaseCost(purchaseCost.doubleValue());
-        FileOutputStream fileOutputStream = new FileOutputStream("products.ser");
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(products);
-        fileOutputStream.close();
         purchaseOrder.setProducts(products);
+        purchaseOrder.setSalesDate(new java.util.Date());
         purchaseOrderFacade.create(purchaseOrder);
     }
     

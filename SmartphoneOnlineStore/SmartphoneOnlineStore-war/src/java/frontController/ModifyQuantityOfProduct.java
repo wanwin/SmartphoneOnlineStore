@@ -4,6 +4,8 @@ import entity.Product;
 import java.io.IOException;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import userBeans.CartLocal;
@@ -40,11 +42,9 @@ public class ModifyQuantityOfProduct extends FrontCommand{
                     }
                 }    
             }    
-            try {
-                forward(CART_PATH);
-            } catch (ServletException | IOException ex) {
-            }
-        } catch (NamingException ex) {
+            forward(CART_PATH);
+        } 
+        catch (NamingException | ServletException | IOException ex) {
         }
     }
 }

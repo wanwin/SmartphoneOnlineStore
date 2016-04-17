@@ -11,8 +11,7 @@ public class ViewCartCommand extends FrontCommand{
         try {
             initCart();
             forward(CART_PATH);
-        } catch (NamingException ex) {
-        } catch (ServletException | IOException ex) {
-        }
+        } catch (NamingException | ServletException | IOException ex) {
+        } 
     }
 }

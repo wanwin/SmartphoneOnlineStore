@@ -18,13 +18,19 @@ public class AddToCartCommand extends FrontCommand{
             if (isAvailable(product)){
                 cart.addToCart(product);
             }
-            FindProductCommand findProductCommand = new FindProductCommand();
-            findProductCommand.context = this.context;
-            findProductCommand.request = this.request;
-            findProductCommand.response = this.response;
+            FindProductCommand findProductCommand = initializeCommand();
             findProductCommand.process();
-        } catch (NamingException ex) {
+        } 
+        catch (NamingException ex) {
         }
+    }
+
+    private FindProductCommand initializeCommand() {
+        FindProductCommand findProductCommand = new FindProductCommand();
+        findProductCommand.context = this.context;
+        findProductCommand.request = this.request;
+        findProductCommand.response = this.response;
+        return findProductCommand;
     }
 
     private static boolean isAvailable(Product product) {

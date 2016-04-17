@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="resources/css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="resources/stylesheet.css" rel="stylesheet" media="screen">
-        <title>Movilazos.es</title>
+        <title>Datos de compra</title>
     </head>
     <body>
         <%!

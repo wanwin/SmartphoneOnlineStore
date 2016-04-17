@@ -6,10 +6,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Movilazos.es</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="resources/css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="resources/stylesheet.css" rel="stylesheet" media="screen">
+        <title>Historial de compras</title>
     </head>
     <body>
         <%!
@@ -25,7 +25,7 @@
         <div w3-include-HTML="library/navbar.jsp"></div>
         <div class="container">
             <form action="FrontControllerServlet" role="form">
-                <input type="hidden" name="command" value="ShowPreviousPurchasesCommand">
+                <input type="hidden" name="command" value="SearchPreviousPurchasesCommand">
                 <div class="text-center">
                     <label for="dni">Introduzca su DNI para ver compras anteriores:
                     <input type="text" class="form-control" name="dni" id="dni" required/></label>

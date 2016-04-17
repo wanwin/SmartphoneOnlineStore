@@ -21,6 +21,8 @@ abstract class FrontCommand {
     protected static final String CART_PATH = "/cart.jsp";
     protected static final String PURCHASE_FINISHED_PATH = "/purchaseFinished.jsp";
     protected static final String PREVIOUS_PURCHASES_PATH = "/previousPurchases.jsp";
+    protected static final String PURCHASE_PRODUCTS_PATH = "/purchaseProducts.jsp";
+    
     
     
     protected ServletContext context;

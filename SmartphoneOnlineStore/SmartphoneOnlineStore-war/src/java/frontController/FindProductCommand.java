@@ -38,11 +38,9 @@ public class FindProductCommand extends FrontCommand{
             }
             request.setAttribute("Manufacturers", manufacturers);
             request.setAttribute("Products", products);
-            try {
-                forward(PRODUCTS_PATH);
-            } catch (ServletException | IOException ex) {
-            }
-        } catch (NamingException ex) {
+            forward(PRODUCTS_PATH);
+        } 
+        catch (NamingException | ServletException | IOException ex) {
         }
     }
 }
