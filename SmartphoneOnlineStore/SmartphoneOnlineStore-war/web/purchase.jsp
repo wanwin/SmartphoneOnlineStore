@@ -47,6 +47,14 @@
                                 <label for="dni">DNI:
                                 <input type="text" class="form-control" name="dni" id="dni" required/></label>
                             </div>
+                            <div class="form-group">
+                                <label for="tel">Teléfono:
+                                <input type="text" class="form-control" name="tel" id="tel" required/></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Dirección:
+                                <input type="text" class="form-control" name="address" id="address" required/></label>
+                            </div>
                             <div class="bg-info info"><p>Se aplicará el IGIC (7%) al total de la factura.</p></div>
                             <input type="submit" class="btn btn-purchase" value="Finalizar Compra">
                         </form><br>

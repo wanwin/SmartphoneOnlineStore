@@ -29,8 +29,11 @@ public class SearchPreviousPurchasesCommand extends FrontCommand{
                     } 
                     request.setAttribute("purchases", previousPurchaseOrders);
                 }
-                forward(PREVIOUS_PURCHASES_PATH);
-            }    
+            }
+            else{
+                request.setAttribute("purchases", null);    
+            }
+            forward(PREVIOUS_PURCHASES_PATH);
         } 
         catch (NamingException | ServletException | IOException ex) {
         }

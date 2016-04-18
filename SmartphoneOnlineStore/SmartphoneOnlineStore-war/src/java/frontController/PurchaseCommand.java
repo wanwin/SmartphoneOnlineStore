@@ -8,17 +8,16 @@ import controller.PurchaseOrderFacadeLocal;
 import entity.Customer;
 import entity.Product;
 import entity.PurchaseOrder;
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -30,9 +29,11 @@ public class PurchaseCommand extends FrontCommand{
     @Override
     public void process() {
         response.setContentType("text/html;charset=UTF-8");
+        String name = encodeStringToUTF8(request.getParameter("name")); 
+        String surname = encodeStringToUTF8(request.getParameter("surname"));
         String dni = request.getParameter("dni");
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
+        String tel = request.getParameter("tel");
+        String address = encodeStringToUTF8(request.getParameter("address"));
         try(PrintWriter out = response.getWriter()){
             CartLocal cart = initCart();
             ConcurrentHashMap<Product, Integer> products = cart.getProducts();
@@ -47,14 +48,14 @@ public class PurchaseCommand extends FrontCommand{
             PurchaseOrderFacadeLocal purchaseOrderFacade = InitialContext.doLookup(PURCHASE_ORDER_JNDI_URL);
             Customer customer = customerFacade.find(dni);
             if (!isCustomerInDB(customer)){
-                customer = createCustomer(dni, name, surname);
+                customer = createCustomer(name, surname, dni, tel, address);
                 customerFacade.create(customer);
             }
             createPurchaseOrder(cart, customer, purchaseOrderFacade);
             openPDF();
             createCompanyHead("../../web/resources/img/logo_horizontal.png", 
                     "Movilazos SL", "B35.258.951", "Las Palmas de Gran Canaria", "928 928 928");
-            createClientHead(customer.getName(), customer.getCustomerId(), "C/Desengaño 21", "928 456 654");
+            createClientHead(name, surname, dni, tel, address);
             createTable(3, products);
             products.clear();
             closePDF();
@@ -64,14 +65,21 @@ public class PurchaseCommand extends FrontCommand{
         }
     }
 
+    private String encodeStringToUTF8(String str) {
+        byte string[] = str.getBytes(ISO_8859_1);
+        return new String(string, UTF_8);
+    }
+
     private boolean isCustomerInDB(Customer customer) {
         return customer != null;
     }
     
-    private Customer createCustomer(String dni, String name, String surname) throws NumberFormatException {
+    private Customer createCustomer(String name, String surname, String dni, String tel, String address) throws NumberFormatException {
         Customer customer = new Customer(dni);
         customer.setName(name);
         customer.setSurname(surname);
+        customer.setPhone(tel);
+        customer.setAddressline1(address);
         return customer;
     }
     
@@ -82,7 +90,7 @@ public class PurchaseCommand extends FrontCommand{
         purchaseOrder.setCustomerId(customer);
         purchaseOrder.setPurchaseCost(purchaseCost.doubleValue());
         purchaseOrder.setProducts(products);
-        purchaseOrder.setSalesDate(new java.util.Date());
+        purchaseOrder.setSalesDate(new Date());
         purchaseOrderFacade.create(purchaseOrder);
     }
     
@@ -97,18 +105,20 @@ public class PurchaseCommand extends FrontCommand{
     }
     
     
-    public void createClientHead(String name, String dni, String direction, String phone) throws DocumentException{
+    public void createClientHead(String name, String surname, String dni, String tel, String address) throws DocumentException{
         addParagraph(name, Chunk.ALIGN_RIGHT);
+        addParagraph(surname, Chunk.ALIGN_RIGHT);
         addParagraph(dni, Chunk.ALIGN_RIGHT);
-        addParagraph(direction, Chunk.ALIGN_RIGHT);
-        addParagraph(phone, Chunk.ALIGN_RIGHT);
+        addParagraph(tel, Chunk.ALIGN_RIGHT);
+        addParagraph(address, Chunk.ALIGN_RIGHT);
         addParagraph("-", Chunk.ALIGN_RIGHT);
         
     }
     
     public void openPDF() throws FileNotFoundException, DocumentException{
         //FileOutputStream pdf = new FileOutputStream("/home/evelin/Escritorio/Factura.pdf");
-        FileOutputStream pdf = new FileOutputStream("C:\\Users\\Darwin\\Desktop\\Factura.pdf");
+        //FileOutputStream pdf = new FileOutputStream("C:\\Users\\Darwin\\Desktop\\Factura.pdf");
+        FileOutputStream pdf = new FileOutputStream("C:\\Users\\alumno\\Desktop\\Factura.pdf");
         PdfWriter.getInstance(document,pdf).setInitialLeading(20);
         document.open();
     }

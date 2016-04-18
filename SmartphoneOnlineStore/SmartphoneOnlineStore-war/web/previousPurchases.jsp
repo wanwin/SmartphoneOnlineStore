@@ -1,9 +1,5 @@
-<%-- 
-    Document   : previousPurchases
-    Created on : 15-abr-2016, 4:13:23
-    Author     : Darwin
---%>
-
+<%@page import="java.util.GregorianCalendar"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="entity.PurchaseOrder"%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.List"%>
@@ -36,7 +32,8 @@
         <%
             List<PurchaseOrder> purchases = (List<PurchaseOrder>)request.getAttribute("purchases");
             if (purchases == null){
-                out.println("<h1 class=\"bg-warning warning\"></h1>");
+                out.println("<h1 class=\"bg-warning warning text-center\">No se ha encontrado " +
+                            "un usuario con ese DNI.</h1>");
             }
             else{
                 out.println("<table class=\"table table-hover\">");
