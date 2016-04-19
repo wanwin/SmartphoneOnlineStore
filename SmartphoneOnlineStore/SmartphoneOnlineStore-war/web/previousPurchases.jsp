@@ -39,14 +39,14 @@
                 out.println("<table class=\"table table-hover\">");
                     out.println("<thead>");
                         out.println("<tr>");
-                            out.println("<th>HORA DEL PEDIDO</th>");
-                            out.println("<th>ACCIÓN</th>");
+                            out.println("<th>Fecha del pedido</th>");
+                            out.println("<th>Acción</th>");
                         out.println("</tr>");
                     out.println("</thead>");
                     out.println("<tbody>");
                 for (PurchaseOrder purchase: purchases) {
                     out.println("<tr>");
-                        out.println("<td>" + purchase.getSalesDate().toString() + "</td>");
+                        out.println("<td>" + purchase.getDate() + "</td>");
                         out.println("<td>");
                         out.println("<form action=\"FrontControllerServlet\">" +
                                         "<input type=\"hidden\" name=\"command\" value=\"SearchPurchaseProductsCommand\">" +

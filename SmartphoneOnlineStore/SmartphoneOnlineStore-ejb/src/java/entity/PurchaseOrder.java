@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package entity;
 
 import java.io.Serializable;
@@ -25,10 +19,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author alumno
- */
 @Entity
 @Table(name = "PURCHASE_ORDER")
 @XmlRootElement
@@ -39,8 +29,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PurchaseOrder.findByPurchaseCost", query = "SELECT p FROM PurchaseOrder p WHERE p.purchaseCost = :purchaseCost"),
     @NamedQuery(name = "PurchaseOrder.findBySalesDate", query = "SELECT p FROM PurchaseOrder p WHERE p.salesDate = :salesDate"),
     @NamedQuery(name = "PurchaseOrder.findByShippingDate", query = "SELECT p FROM PurchaseOrder p WHERE p.shippingDate = :shippingDate"),
-    @NamedQuery(name = "PurchaseOrder.findByFreightCompany", query = "SELECT p FROM PurchaseOrder p WHERE p.freightCompany = :freightCompany")})
+    @NamedQuery(name = "PurchaseOrder.findByFreightCompany", query = "SELECT p FROM PurchaseOrder p WHERE p.freightCompany = :freightCompany"),
+    @NamedQuery(name = "PurchaseOrder.findByDate", query = "SELECT p FROM PurchaseOrder p WHERE p.date = :date")})
 public class PurchaseOrder implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,6 +56,9 @@ public class PurchaseOrder implements Serializable {
     @Lob
     @Column(name = "PRODUCTS")
     private Serializable products;
+    @Size(max = 20)
+    @Column(name = "DATE")
+    private String date;
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
     @ManyToOne(optional = false)
     private Customer customerId;
@@ -129,6 +124,14 @@ public class PurchaseOrder implements Serializable {
 
     public void setProducts(Serializable products) {
         this.products = products;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public Customer getCustomerId() {

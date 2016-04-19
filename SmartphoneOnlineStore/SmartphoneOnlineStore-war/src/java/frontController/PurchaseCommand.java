@@ -15,7 +15,9 @@ import java.io.PrintWriter;
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import java.text.DecimalFormat;
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.naming.InitialContext;
@@ -90,8 +92,22 @@ public class PurchaseCommand extends FrontCommand{
         purchaseOrder.setCustomerId(customer);
         purchaseOrder.setPurchaseCost(purchaseCost.doubleValue());
         purchaseOrder.setProducts(products);
-        purchaseOrder.setSalesDate(new Date());
+        purchaseOrder.setDate(constructDate());
         purchaseOrderFacade.create(purchaseOrder);
+    }
+    
+    private String constructDate() {
+        Calendar calendar = new GregorianCalendar();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss ");
+        return simpleDateFormat.format(calendar.getTime());
+    }
+    
+    public void openPDF() throws FileNotFoundException, DocumentException{
+        //FileOutputStream pdf = new FileOutputStream("/home/evelin/Escritorio/Factura.pdf");
+        //FileOutputStream pdf = new FileOutputStream("C:\\Users\\Darwin\\Desktop\\Factura.pdf");
+        FileOutputStream pdf = new FileOutputStream("C:\\Users\\alumno\\Desktop\\Factura.pdf");
+        PdfWriter.getInstance(document,pdf).setInitialLeading(20);
+        document.open();
     }
     
     public void createCompanyHead(String logo, String name, String cif, String location, String phone) throws DocumentException{
@@ -105,7 +121,7 @@ public class PurchaseCommand extends FrontCommand{
     }
     
     
-    public void createClientHead(String name, String surname, String dni, String tel, String address) throws DocumentException{
+    private void createClientHead(String name, String surname, String dni, String tel, String address) throws DocumentException{
         addParagraph(name, Chunk.ALIGN_RIGHT);
         addParagraph(surname, Chunk.ALIGN_RIGHT);
         addParagraph(dni, Chunk.ALIGN_RIGHT);
@@ -115,31 +131,7 @@ public class PurchaseCommand extends FrontCommand{
         
     }
     
-    public void openPDF() throws FileNotFoundException, DocumentException{
-        //FileOutputStream pdf = new FileOutputStream("/home/evelin/Escritorio/Factura.pdf");
-        //FileOutputStream pdf = new FileOutputStream("C:\\Users\\Darwin\\Desktop\\Factura.pdf");
-        FileOutputStream pdf = new FileOutputStream("C:\\Users\\alumno\\Desktop\\Factura.pdf");
-        PdfWriter.getInstance(document,pdf).setInitialLeading(20);
-        document.open();
-    }
-    
-    public void addLogoToPDF(String path){
-        try{
-            Image picture = Image.getInstance(path);
-            picture.scaleToFit(100, 100);
-            picture.setAlignment(Chunk.ALIGN_LEFT);
-            document.add(picture);
-        }catch (Exception e){}
-    }
-    
-    public void addParagraph(String text, int alignment) throws DocumentException{
-        Paragraph paragraph = new Paragraph(text,
-                FontFactory.getFont("arial",15,Font.ITALIC,BaseColor.BLACK));
-        paragraph.setAlignment(alignment);
-        document.add(paragraph);
-    }
-    
-    public void createTable(int column, ConcurrentHashMap<Product, Integer> products) throws DocumentException{
+    private void createTable(int column, ConcurrentHashMap<Product, Integer> products) throws DocumentException{
         DecimalFormat df = new DecimalFormat("0.00");
         PdfPTable productsTable = new PdfPTable(column);
         PdfPTable finalTable = new PdfPTable(2);
@@ -152,6 +144,29 @@ public class PurchaseCommand extends FrontCommand{
         printFinalTable(finalTable, subtotal, df, total);
         document.add(finalTable);
     }
+    
+    private void closePDF(){
+        document.close();
+    }
+    
+    private void addLogoToPDF(String path){
+        try{
+            Image picture = Image.getInstance(path);
+            picture.scaleToFit(100, 100);
+            picture.setAlignment(Chunk.ALIGN_LEFT);
+            document.add(picture);
+        }
+        catch (Exception e){
+        }
+    }
+    
+    private void addParagraph(String text, int alignment) throws DocumentException{
+        Paragraph paragraph = new Paragraph(text,
+                FontFactory.getFont("arial",15,Font.ITALIC,BaseColor.BLACK));
+        paragraph.setAlignment(alignment);
+        document.add(paragraph);
+    }
+    
 
     private void printHeadOfTableOfProducts(PdfPTable productsTable) {
         productsTable.addCell("Producto");
@@ -181,9 +196,5 @@ public class PurchaseCommand extends FrontCommand{
         finalTable.addCell("" + df.format(subtotal * 0.07) + "");
         finalTable.addCell("Total");
         finalTable.addCell("" + total + "");
-    }
-    
-    public void closePDF(){
-        document.close();
     }
 }
