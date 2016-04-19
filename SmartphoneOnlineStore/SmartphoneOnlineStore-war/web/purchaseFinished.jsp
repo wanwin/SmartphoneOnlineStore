@@ -24,6 +24,7 @@
         %> 
          <div w3-include-HTML="library/navbar.jsp"></div>
          <div class="text-center bg-success success"><h1>Ha realizado su compra correctamente</h1></div>
+         <div class="text-center"><img src="resources/img/crashBandicoot.gif"></div>
          <div w3-include-HTML="library/footer.html"></div>
          <%
             StatisticsLocal statistics = getStatisticsSingleton(session, request);

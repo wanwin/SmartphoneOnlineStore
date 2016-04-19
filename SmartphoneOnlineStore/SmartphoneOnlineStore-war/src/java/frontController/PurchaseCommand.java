@@ -106,6 +106,7 @@ public class PurchaseCommand extends FrontCommand{
         //FileOutputStream pdf = new FileOutputStream("/home/evelin/Escritorio/Factura.pdf");
         //FileOutputStream pdf = new FileOutputStream("C:\\Users\\Darwin\\Desktop\\Factura.pdf");
         FileOutputStream pdf = new FileOutputStream("C:\\Users\\alumno\\Desktop\\Factura.pdf");
+        
         PdfWriter.getInstance(document,pdf).setInitialLeading(20);
         document.open();
     }
