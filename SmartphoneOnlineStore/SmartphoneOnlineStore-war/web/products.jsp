@@ -89,7 +89,7 @@
                                         out.println("<h3>" + product.getManufacturerId().getName() + "<br>" + product.getDescription() + "</h3>");
                                     out.println("</div>");
                                     out.println("<div class=\"panel-body\">");
-                                        out.println("<img src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\" width=\"100\" height=\"100\" alt=\"Móvil_img\">");
+                                        out.println("<a href=" + product.getImage() + "><img src=" + product.getImage() + " width=\"100\" height=\"100\" alt=\"Móvil_img\" title=\"Ampliar imagen\"></a>");
                                     out.println("</div>");
                                     out.println("<div class=\"panel-footer\">");
                                         out.println("<h3>" + product.getPurchaseCost() + "€</h3>");

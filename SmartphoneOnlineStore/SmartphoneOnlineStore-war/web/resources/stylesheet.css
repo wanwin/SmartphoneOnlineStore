@@ -318,6 +318,22 @@ p{
     width: 0em;
 }
 
+.table-vcenter td {
+    vertical-align: middle !important;
+}
+
+.float-left {
+    float: left;
+}
+
+.inline-block-center {
+    display: inline;
+    float: inside;
+}
+.position_relative {
+    position: relative;
+}
+
 /*#borrar img {
     height: calc(100vh - 50px);
     width: 100%;

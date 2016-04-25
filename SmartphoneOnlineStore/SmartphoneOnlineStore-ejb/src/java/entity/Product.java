@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Product.findByQuantityOnHand", query = "SELECT p FROM Product p WHERE p.quantityOnHand = :quantityOnHand"),
     @NamedQuery(name = "Product.findByMarkup", query = "SELECT p FROM Product p WHERE p.markup = :markup"),
     @NamedQuery(name = "Product.findByAvailable", query = "SELECT p FROM Product p WHERE p.available = :available"),
-    @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description")})
+    @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
+    @NamedQuery(name = "Product.findByImage", query = "SELECT p FROM Product p WHERE p.image = :image")})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,6 +61,9 @@ public class Product implements Serializable {
     @JoinColumn(name = "MANUFACTURER_ID", referencedColumnName = "MANUFACTURER_ID")
     @ManyToOne(optional = false)
     private Manufacturer manufacturerId;
+    @Column(name = "IMAGE")
+    private String image;
+    @Size(max = 1000)
 
     public Product() {
     }
@@ -102,6 +106,14 @@ public class Product implements Serializable {
 
     public String getAvailable() {
         return available;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public void setAvailable(String available) {

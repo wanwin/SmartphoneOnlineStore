@@ -50,7 +50,7 @@
                             out.println("<div class=\"text-center bg-danger alert-danger\"><h2>No hay unidades suficientes para el producto " + product.getManufacturerId().getName()+ " " + product.getDescription() + "</h2></div>");
                         }
                     }
-                    out.println("<table class=\"table table-hover\">");
+                    out.println("<table class=\"table table-hover table-vcenter table-striped text-center table-condensed\">");
                         out.println("<thead>");
                             out.println("<tr>");
                                 out.println("<th>IMAGEN</th>");
@@ -65,23 +65,21 @@
                     Product product = entry.getKey();
                     Integer quantity = entry.getValue();
                             out.println("<tr>");
-                                out.println("<td><img src=\"http://www.entrecomics.com/wp-content/uploads/2007/08/cellphone.gif\" width=\"50\" height=\"50\" alt=\"foto\"></td>");
+                                out.println("<td><a href=" + product.getImage() + "><img src=" + product.getImage() + " width=\"100\" height=\"100\" alt=\"Móvil_img\" title=\"Ampliar imagen\"></a></td>");
                                 out.println("<td>" + product.getManufacturerId().getName() + " " + product.getDescription() + "</td>");
                                 out.println("<td>" + product.getPurchaseCost() + "</td>");
                                 
-                                out.println("<td>");
+                                out.println("<td class=\"text-center\">");
+                                    out.println("<p>" + quantity + "</p>");
                                     out.println("<form action=\"FrontControllerServlet\">");
                                     out.println("<input type=\"hidden\" name=\"command\" value=\"ModifyQuantityOfProduct\">");
                                     out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
-                                    out.println("<input class=\"btn btn-decrementProduct\" name=\"decrementButton\" value=\"\" type=\"submit\">");
-                                    //out.println("<label for=\"decrementButton\" class=\"btn\"><i class=\"glyphicon glyphicon-minus\"></i></label>");
+                                    out.println("<input class=\"btn btn-incrementProduct position-relative\" name=\"incrementButton\" value=\"\" type=\"submit\">");
                                     out.println("</form>");
-                                    out.println(quantity);
                                     out.println("<form action=\"FrontControllerServlet\">");
                                     out.println("<input type=\"hidden\" name=\"command\" value=\"ModifyQuantityOfProduct\">");
                                     out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
-                                    out.println("<input class=\"btn btn-incrementProduct\" name=\"incrementButton\" value=\"\" type=\"submit\">");
-                                    //out.println("<label for=\"incrementButton\" class=\"btn\"><i class=\"glyphicon glyphicon-plus\"></i></label>");
+                                    out.println("<input class=\"btn btn-decrementProduct position-relative\" name=\"decrementButton\" value=\"\" type=\"submit\">");
                                     out.println("</form>");
                                 out.println("</td>");
                                 
