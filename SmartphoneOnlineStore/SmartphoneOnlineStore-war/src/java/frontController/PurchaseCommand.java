@@ -1,42 +1,50 @@
 package frontController;
 
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import controller.CustomerFacadeLocal;
 import controller.ProductFacadeLocal;
 import controller.PurchaseOrderFacadeLocal;
+import edu.stanford.ejalbert.BrowserLauncher;
+import edu.stanford.ejalbert.exception.BrowserLaunchingInitializingException;
+import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 import entity.Customer;
 import entity.Product;
 import entity.PurchaseOrder;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
-import static java.nio.charset.StandardCharsets.ISO_8859_1;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import userBeans.CartLocal;
+
 public class PurchaseCommand extends FrontCommand{
     
     Document document = new Document();
+    ByteArrayOutputStream pdf;
     
     @Override
     public void process() {
-        response.setContentType("text/html;charset=UTF-8");
-        String name = encodeStringToUTF8(request.getParameter("name")); 
-        String surname = encodeStringToUTF8(request.getParameter("surname"));
-        String dni = request.getParameter("dni");
-        String tel = request.getParameter("tel");
-        String address = encodeStringToUTF8(request.getParameter("address"));
-        try(PrintWriter out = response.getWriter()){
+        try {
+            String name = encodeStringToUTF8(request.getParameter("name"));
+            String surname = encodeStringToUTF8(request.getParameter("surname"));
+            String dni = request.getParameter("dni");
+            String tel = request.getParameter("tel");
+            String address = encodeStringToUTF8(request.getParameter("address"));
             CartLocal cart = initCart();
             ConcurrentHashMap<Product, Integer> products = cart.getProducts();
             ProductFacadeLocal productFacade = (ProductFacadeLocal) InitialContext.doLookup(PRODUCT_JNDI_URL);
@@ -61,9 +69,21 @@ public class PurchaseCommand extends FrontCommand{
             createTable(3, products);
             products.clear();
             closePDF();
-            forward(PURCHASE_FINISHED_PATH);
+            response.setHeader("Expires", "0");
+            response.setHeader("Cache-Control",
+                    "must-revalidate, post-check=0, pre-check=0");
+            response.setHeader("Pragma", "public");
+            response.setHeader("content-disposition", "attachment; filename=\"Factura.pdf\"");
+            response.setContentType("application/pdf");
+            response.setContentLength(pdf.size());
+            OutputStream os = response.getOutputStream();
+            pdf.writeTo(os);
+            os.flush();
+            os.close();
+            BrowserLauncher browserLauncher = new BrowserLauncher();
+            browserLauncher.openURLinBrowser("http://localhost:8080/SmartphoneOnlineStore-war/purchaseFinished.jsp");
         } 
-        catch (NamingException | IOException | DocumentException | ServletException ex) {
+        catch (NamingException | IOException | DocumentException | BrowserLaunchingInitializingException | UnsupportedOperatingSystemException ex) {
         }
     }
 
@@ -98,15 +118,12 @@ public class PurchaseCommand extends FrontCommand{
     
     private String constructDate() {
         Calendar calendar = new GregorianCalendar();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss ");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return simpleDateFormat.format(calendar.getTime());
     }
     
     public void openPDF() throws FileNotFoundException, DocumentException{
-        //FileOutputStream pdf = new FileOutputStream("/home/evelin/Escritorio/Factura.pdf");
-        //FileOutputStream pdf = new FileOutputStream("C:\\Users\\Darwin\\Desktop\\Factura.pdf");
-        FileOutputStream pdf = new FileOutputStream("C:\\Users\\alumno\\Desktop\\Factura.pdf");
-        
+        pdf = new ByteArrayOutputStream();
         PdfWriter.getInstance(document,pdf).setInitialLeading(20);
         document.open();
     }

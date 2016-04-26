@@ -110,7 +110,6 @@
                                 out.println("</td>");
                                 out.println("<td colspan=\"1\" style=\"text-align:center\">");
                                     out.println("<form action=\"purchase.jsp\">");
-                                    out.println("<input type=\"hidden\" name=\"command\" value=\"Purchase\">");
                                     if (areThereAnyErrors){
                                         out.println("<input class=\"btn disabled\" value=\"Finalizar compra\">");
                                     }
