@@ -1,3 +1,4 @@
+<%@page import="userBeans.TimerLocal"%>
 <%@page import="userBeans.StatisticsLocal"%>
 <%@page import="javax.servlet.http.HttpSession"%>
 <%@page import="javax.naming.NamingException"%>
@@ -29,6 +30,9 @@
         <div w3-include-HTML="library/breadcrumb.html"></div>
         <div w3-include-HTML="library/footer.html"></div>
         <%
+            TimerLocal timer = (TimerLocal) InitialContext.doLookup("java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/Timer!userBeans.TimerLocal");
+            timer.setDiscount();
+            timer.unsetDiscount();
             StatisticsLocal statistics = getStatisticsSingleton(session, request);
             if (session.isNew()){
                 statistics.incrementNumberOfUsersConnected();

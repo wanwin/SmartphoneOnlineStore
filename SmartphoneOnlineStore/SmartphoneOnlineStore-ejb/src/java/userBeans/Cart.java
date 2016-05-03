@@ -33,7 +33,14 @@ public class Cart implements CartLocal {
         for (Entry<Product,Integer> entry: products.entrySet()){
             Product product = entry.getKey();
             Integer quantity = entry.getValue();
-            sum += product.getPurchaseCost().floatValue() * quantity;
+            Float productPrice = product.getPurchaseCost().floatValue();
+            Integer productDiscount = product.getDiscount();
+            if (productDiscount > 0){
+                sum += (productPrice - productPrice * productDiscount / 100) * quantity;     
+            }
+            else{
+                sum += productPrice * quantity;
+            }
         }
         return sum;
     }
@@ -49,5 +56,4 @@ public class Cart implements CartLocal {
     public void delFromCart(Product product) {
         products.remove(product);
     }
-    
 }

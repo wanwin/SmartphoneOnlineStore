@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.concurrent.ConcurrentHashMap"%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="javax.naming.InitialContext"%>
@@ -26,10 +27,17 @@
                 }    
                 return statistics;
             }
+            
+            public Float calculatePriceWithDiscount(Product product){
+                Float productPrice = product.getPurchaseCost().floatValue();
+                Integer productDiscount = product.getDiscount();
+                return productPrice - productPrice * productDiscount / 100;
+            }
         %> 
         <div w3-include-HTML="library/navbar.jsp"></div>
         <%
             CartLocal cart = (CartLocal) session.getAttribute("cart");
+            DecimalFormat df = new DecimalFormat("0.00");
             boolean areThereAnyErrors = false;
             if (cart == null || cart.getProducts().isEmpty()){
                 out.println("<div class=\"text-center bg-warning alert-warning\"><h1>El carrito se encuentra vacío.</h1></div>");
@@ -55,7 +63,7 @@
                             out.println("<tr>");
                                 out.println("<th>IMAGEN</th>");
                                 out.println("<th>PRODUCTO</th>");
-                                out.println("<th>PRECIO</th>");
+                                out.println("<th>PRECIO (€)</th>");
                                 out.println("<th colspan=\"\">CANTIDAD</th>");
                                 out.println("<th>¿ELIMINAR?</th>");
                             out.println("</tr>");
@@ -67,8 +75,12 @@
                             out.println("<tr>");
                                 out.println("<td><a href=" + product.getImage() + "><img src=" + product.getImage() + " width=\"100\" height=\"100\" alt=\"Móvil_img\" title=\"Ampliar imagen\"></a></td>");
                                 out.println("<td>" + product.getManufacturerId().getName() + " " + product.getDescription() + "</td>");
-                                out.println("<td>" + product.getPurchaseCost() + "</td>");
-                                
+                                if (product.getDiscount() > 0){
+                                    out.println("<td><strike>" + product.getPurchaseCost().floatValue() + "</strike> <p class=\"lead\">" + calculatePriceWithDiscount(product) + "</p></td>");
+                                }
+                                else{
+                                    out.println("<td>" + product.getPurchaseCost() + "</td>");
+                                }
                                 out.println("<td class=\"text-center\">");
                                     out.println("<p>" + quantity + "</p>");
                                     out.println("<form action=\"FrontControllerServlet\">");
@@ -97,7 +109,7 @@
                                 out.println("<th></th>");
                                 out.println("<th></th>");
                                 out.println("<th></th>");
-                                out.println("<th class=\"info\">TOTAL: " + cart.calculateTotal() +" €</th>");
+                                out.println("<th class=\"info\">TOTAL: " + df.format(cart.calculateTotal()) +" €</th>");
                             out.println("</tr>");
                         out.println("</thead>");
                         out.println("<tbody>");

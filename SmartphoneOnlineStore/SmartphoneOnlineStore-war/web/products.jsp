@@ -30,6 +30,12 @@
                 }    
                 return statistics;
             }
+            
+            public Float calculatePriceWithDiscount(Product product){
+                Float productPrice = product.getPurchaseCost().floatValue();
+                Integer productDiscount = product.getDiscount();
+                return productPrice - productPrice * productDiscount / 100;
+            }
         %>
         <div w3-include-HTML="library/navbar.jsp"></div>
         <%!
@@ -92,7 +98,12 @@
                                         out.println("<a href=" + product.getImage() + "><img src=" + product.getImage() + " width=\"100\" height=\"100\" alt=\"Móvil_img\" title=\"Ampliar imagen\"></a>");
                                     out.println("</div>");
                                     out.println("<div class=\"panel-footer\">");
-                                        out.println("<h3>" + product.getPurchaseCost() + "€</h3>");
+                                        if (product.getDiscount() > 0){
+                                            out.println("<td><strike>" + product.getPurchaseCost().floatValue() + " €</strike> <p class=\"lead\">" + calculatePriceWithDiscount(product) + " €</p></td>");
+                                        }
+                                        else{
+                                            out.println("<h3>" + product.getPurchaseCost() + "€</h3>");
+                                        }    
                                         out.println("<h5>Stock: " + product.getQuantityOnHand() + "</h5>");
                                         out.println("<form action=\"FrontControllerServlet\">");
                                         out.println("<input type=\"hidden\" name=\"command\" value=\"AddToCartCommand\">");

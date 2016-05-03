@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity;
 
 import java.io.Serializable;
@@ -18,12 +19,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Darwin
+ * @author alumno
  */
 @Entity
 @Table(name = "PRODUCT")
@@ -36,9 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Product.findByMarkup", query = "SELECT p FROM Product p WHERE p.markup = :markup"),
     @NamedQuery(name = "Product.findByAvailable", query = "SELECT p FROM Product p WHERE p.available = :available"),
     @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
-    @NamedQuery(name = "Product.findByImage", query = "SELECT p FROM Product p WHERE p.image = :image")})
+    @NamedQuery(name = "Product.findByImage", query = "SELECT p FROM Product p WHERE p.image = :image"),
+    @NamedQuery(name = "Product.findByDiscount", query = "SELECT p FROM Product p WHERE p.discount = :discount")})
 public class Product implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,18 +60,27 @@ public class Product implements Serializable {
     @Size(max = 50)
     @Column(name = "DESCRIPTION")
     private String description;
+    @Size(max = 1000)
+    @Column(name = "IMAGE")
+    private String image;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DISCOUNT")
+    private int discount;
     @JoinColumn(name = "MANUFACTURER_ID", referencedColumnName = "MANUFACTURER_ID")
     @ManyToOne(optional = false)
     private Manufacturer manufacturerId;
-    @Column(name = "IMAGE")
-    private String image;
-    @Size(max = 1000)
 
     public Product() {
     }
 
     public Product(Integer productId) {
         this.productId = productId;
+    }
+
+    public Product(Integer productId, int discount) {
+        this.productId = productId;
+        this.discount = discount;
     }
 
     public Integer getProductId() {
@@ -108,14 +119,6 @@ public class Product implements Serializable {
         return available;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
     public void setAvailable(String available) {
         this.available = available;
     }
@@ -126,6 +129,22 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
     }
 
     public Manufacturer getManufacturerId() {
