@@ -1,3 +1,6 @@
+<%@page import="java.util.GregorianCalendar"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="userBeans.UnsetterTimerLocal"%>
 <%@page import="userBeans.TimerLocal"%>
 <%@page import="userBeans.StatisticsLocal"%>
 <%@page import="javax.servlet.http.HttpSession"%>
@@ -31,8 +34,10 @@
         <div w3-include-HTML="library/footer.html"></div>
         <%
             TimerLocal timer = (TimerLocal) InitialContext.doLookup("java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/Timer!userBeans.TimerLocal");
-            timer.setDiscount();
-            timer.unsetDiscount();
+            timer.initTimer();
+            /*Calendar calendar = new GregorianCalendar();
+            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            out.println("dia de la semana: "+ dayOfWeek);*/
             StatisticsLocal statistics = getStatisticsSingleton(session, request);
             if (session.isNew()){
                 statistics.incrementNumberOfUsersConnected();

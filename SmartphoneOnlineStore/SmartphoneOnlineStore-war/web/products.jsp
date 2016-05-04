@@ -119,16 +119,20 @@
                     }  
                 }
             }
+            
+            out.println("<div class=\"text-center\"><ul class=\"pagination\">");
+            int quantityOfProducts = products.size();
+            int numberOfPages = 0;
+            int pages = 1;
+            if (quantityOfProducts % 6 == 0){
+                numberOfPages = quantityOfProducts / 6;
+            }else numberOfPages = quantityOfProducts / 6 + 1;
+            for (int i = 0; i<quantityOfProducts; i=i+6){
+                out.println("<li><a href=\"#\">" + pages + "</a></li>");
+                pages++;
+            }
+            out.println("</ul></div>");
         %>
-        <div class="text-center">
-            <ul class="pagination">
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-            </ul>
-        </div>
         <div w3-include-HTML="library/footer.html"></div> 
         <%
             StatisticsLocal statistics = getStatisticsSingleton(session, request);
