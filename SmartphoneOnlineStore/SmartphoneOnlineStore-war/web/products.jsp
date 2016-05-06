@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="controller.ProductFacadeLocal"%>
 <%@page import="userBeans.StatisticsLocal"%>
 <%@page import="javax.naming.NamingException"%>
 <%@page import="java.util.Iterator"%>
@@ -70,6 +72,9 @@
         <%
             List<Manufacturer> manufacturers = (List<Manufacturer>)request.getAttribute("Manufacturers");
             List<Product> products = (List<Product>)request.getAttribute("Products");
+            List<Product> allProducts = new ArrayList<Product>();
+            ProductFacadeLocal productFacade = (ProductFacadeLocal) InitialContext.doLookup("java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ProductFacade!controller.ProductFacadeLocal");
+            allProducts.addAll(productFacade.findAll());
             int numberOfProductsInThisRow = 0;
             if (products != null){
                 out.println("<div class=\"container-fluid\">");
@@ -120,17 +125,29 @@
                 }
             }
             
-            out.println("<div class=\"text-center\"><ul class=\"pagination\">");
-            int quantityOfProducts = products.size();
+            int quantityOfProducts = allProducts.size();
             int numberOfPages = 0;
             int pages = 1;
             if (quantityOfProducts % 6 == 0){
                 numberOfPages = quantityOfProducts / 6;
             }else numberOfPages = quantityOfProducts / 6 + 1;
+            out.println("<div class=\"text-center\"><ul class=\"pagination\">");
+            out.println("<table>");
+                out.println("<li>");
+                out.println("<tr>");
             for (int i = 0; i<quantityOfProducts; i=i+6){
-                out.println("<li><a href=\"#\">" + pages + "</a></li>");
+                out.println("<td>");
+                    out.println("<form action=\"FrontControllerServlet\">");
+                        out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
+                        out.println("<input type=\"hidden\" name=\"pagination\" value=\"" + pages + "\">");
+                        out.println("<input type=\"submit\" value=\"" + pages + "\">");
+                    out.println("</form>");
+                out.println("</td>");
                 pages++;
             }
+                out.println("</tr>");
+                out.println("</li>");
+            out.println("</table>");
             out.println("</ul></div>");
         %>
         <div w3-include-HTML="library/footer.html"></div> 

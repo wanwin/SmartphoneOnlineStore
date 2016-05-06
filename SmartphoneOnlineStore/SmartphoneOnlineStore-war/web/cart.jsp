@@ -43,6 +43,7 @@
                 out.println("<div class=\"text-center bg-warning alert-warning\"><h1>El carrito se encuentra vacío.</h1></div>");
                 out.println("<form class=\"text-center\" action=\"FrontControllerServlet\">");
                 out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
+                out.println("<input type=\"hidden\" name=\"pagination\" value=\"1\">");
                 out.println("<input class=\"btn btn-continueShopping\" type=\"submit\" value=\"Seguir Comprando\">");
                 out.println("</form><br>");
             }

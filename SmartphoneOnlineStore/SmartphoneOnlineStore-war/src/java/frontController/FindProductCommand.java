@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 
 public class FindProductCommand extends FrontCommand{
 
+    static String stringPage = null;
     @Override
     public void process(){
         try {
@@ -21,6 +22,7 @@ public class FindProductCommand extends FrontCommand{
             String manufacturerID = request.getParameter("manufacturer");
             List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
             List<Product> products = new ArrayList<Product>();
+            List<Product> allProducts = new ArrayList<Product>();
             if (manufacturerID != null){
                 ArrayList<Product> productsToRemove = new ArrayList<>();
                 manufacturers.add(manufacturerFacade.find(Integer.parseInt(manufacturerID)));
@@ -33,8 +35,15 @@ public class FindProductCommand extends FrontCommand{
                 products.removeAll(productsToRemove);
             }
             else{
+                stringPage = getStringPage();
                 manufacturers.addAll(manufacturerFacade.findAll());
-                products.addAll(productFacade.findAll());
+                allProducts.addAll(productFacade.findAll());
+                int page = Integer.parseInt(stringPage);
+                int rightIndexInFor = page*6;
+                if(isLastPage(allProducts.size(),page)) rightIndexInFor = allProducts.size();
+                for (int i = (page-1)*6; i < rightIndexInFor; i++) {
+                    products.add(allProducts.get(i));
+                }
             }
             request.setAttribute("Manufacturers", manufacturers);
             request.setAttribute("Products", products);
@@ -43,4 +52,14 @@ public class FindProductCommand extends FrontCommand{
         catch (NamingException | ServletException | IOException ex) {
         }
     }
+
+    private Boolean isLastPage(int size, int page) {
+        if (size % 6 == page) return true;
+        else return false;
+    }
+    
+    public String getStringPage(){
+        return this.stringPage;
+    }
+    
 }

@@ -11,6 +11,7 @@ public class FrontControllerServlet extends HttpServlet {
 
     private static final String PACKAGE_NAME = "frontController.";
     private static final String PARAMETER_NAME = "command";
+    private static final String PARAMETER_PAGINATION = "pagination";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -18,6 +19,7 @@ public class FrontControllerServlet extends HttpServlet {
             String commandPath = PACKAGE_NAME + request.getParameter(PARAMETER_NAME);
             try {
                 FrontCommand action1 = (FrontCommand) createCommandInstance(commandPath);
+                action1.modifyStringPaginationNumber(request.getParameter(PARAMETER_PAGINATION));
                 action1.init(getServletContext(), request, response);
                 action1.process();
             } catch (InstantiationException | IllegalAccessException ex) {

@@ -22,9 +22,6 @@ abstract class FrontCommand {
     protected static final String PURCHASE_FINISHED_PATH = "/purchaseFinished.jsp";
     protected static final String PREVIOUS_PURCHASES_PATH = "/previousPurchases.jsp";
     protected static final String PURCHASE_PRODUCTS_PATH = "/purchaseProducts.jsp";
-    
-    
-    
     protected ServletContext context;
     protected HttpServletRequest request;
     protected HttpServletResponse response;
@@ -37,6 +34,10 @@ abstract class FrontCommand {
     }
     
     abstract public void process();
+    
+    public void modifyStringPaginationNumber(String string){
+        FindProductCommand.stringPage = string;
+    }
     
     public void forward(String target) throws ServletException, IOException{
         RequestDispatcher requestDispatcher = context.getRequestDispatcher(target);

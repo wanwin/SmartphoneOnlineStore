@@ -18,6 +18,7 @@
                 <li><a href="index.jsp">INICIO</a></li>
                 <li><form action="FrontControllerServlet">
                         <input type="hidden" name="command" value="FindProductCommand">
+                        <input type="hidden" name="pagination" value="1">
                         <input class="transparentButton" type="submit" value="PRODUCTOS">
                     </form></li>
                 <li><a href="previousPurchasesForm.jsp">VER COMPRAS ANTERIORES</a></li>

@@ -39,7 +39,7 @@ public class Timer implements TimerLocal {
         }
     }
 
-    @Schedule(dayOfWeek = "San,Mon,Wed,Thu,Fri,Sat")
+    @Schedule(dayOfWeek = "Sun,Mon,Wed,Thu,Fri,Sat")
     public void unsetDiscount() {
         try {
             ProductFacadeLocal productFacade = InitialContext.doLookup("java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ProductFacade!controller.ProductFacadeLocal");

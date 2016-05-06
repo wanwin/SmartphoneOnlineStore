@@ -1,6 +1,5 @@
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.Calendar"%>
-<%@page import="userBeans.UnsetterTimerLocal"%>
 <%@page import="userBeans.TimerLocal"%>
 <%@page import="userBeans.StatisticsLocal"%>
 <%@page import="javax.servlet.http.HttpSession"%>
