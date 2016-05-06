@@ -118,6 +118,7 @@
                                 out.println("<td colspan=\"3\" style=\"text-align:center\">");
                                     out.println("<form action=\"FrontControllerServlet\">");
                                     out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
+                                    out.println("<input type=\"hidden\" name=\"pagination\" value=\"1\">");
                                     out.println("<input class=\"btn btn-continueShopping\" type=\"submit\" value=\"Seguir Comprando\">");
                                     out.println("</form>");
                                 out.println("</td>");

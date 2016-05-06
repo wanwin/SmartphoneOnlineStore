@@ -19,7 +19,9 @@ public class FrontControllerServlet extends HttpServlet {
             String commandPath = PACKAGE_NAME + request.getParameter(PARAMETER_NAME);
             try {
                 FrontCommand action1 = (FrontCommand) createCommandInstance(commandPath);
-                action1.modifyStringPaginationNumber(request.getParameter(PARAMETER_PAGINATION));
+                if (request.getParameter("pagination") != null){
+                    action1.modifyStringPaginationNumber(request.getParameter(PARAMETER_PAGINATION));
+                }
                 action1.init(getServletContext(), request, response);
                 action1.process();
             } catch (InstantiationException | IllegalAccessException ex) {
