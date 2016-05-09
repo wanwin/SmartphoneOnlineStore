@@ -33,7 +33,7 @@
         <div w3-include-HTML="library/footer.html"></div>
         <%
             TimerLocal timer = (TimerLocal) InitialContext.doLookup("java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/Timer!userBeans.TimerLocal");
-            timer.initTimer();
+            timer.setDiscount();
             /*Calendar calendar = new GregorianCalendar();
             int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
             out.println("dia de la semana: "+ dayOfWeek);*/

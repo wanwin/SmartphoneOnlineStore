@@ -126,29 +126,34 @@
             }
             
             int quantityOfProducts = allProducts.size();
-            int numberOfPages = 0;
             int pages = 1;
-            if (quantityOfProducts % 6 == 0){
-                numberOfPages = quantityOfProducts / 6;
-            }else numberOfPages = quantityOfProducts / 6 + 1;
             out.println("<div class=\"text-center\"><ul class=\"pagination\">");
             out.println("<table>");
                 out.println("<li>");
                 out.println("<tr>");
+            out.println("<div class=\"btn-group\">");    
+            int pageNumber = Integer.parseInt(request.getParameter("pagination"));
             for (int i = 0; i<quantityOfProducts; i=i+6){
                 out.println("<td>");
                     out.println("<form action=\"FrontControllerServlet\">");
                         out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
                         out.println("<input type=\"hidden\" name=\"pagination\" value=\"" + pages + "\">");
-                        out.println("<input type=\"submit\" value=\"" + pages + "\">");
+                        if (pageNumber == pages){
+                            out.println("<input class=\"btn active\" type=\"submit\" value=\"" + pages + "\">");
+                        }
+                        else{
+                            out.println("<input class=\"btn btn-pagination\" type=\"submit\" value=\"" + pages + "\">");
+                        }
                     out.println("</form>");
                 out.println("</td>");
                 pages++;
             }
+            out.println("</div>");    
                 out.println("</tr>");
                 out.println("</li>");
             out.println("</table>");
             out.println("</ul></div>");
+            out.println("<p>" + pageNumber + "</p>");
         %>
         <div w3-include-HTML="library/footer.html"></div> 
         <%

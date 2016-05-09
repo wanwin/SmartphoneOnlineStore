@@ -1,3 +1,7 @@
+*{
+    font-family: Helvetica;    
+}
+
 body {
     padding-top: 75px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
@@ -174,6 +178,30 @@ p{
     outline:none;
     color: gray;
     padding: 2em;
+}
+
+.btn-pagination {
+    color: #333;
+    background-color: #fff;
+    border-color: #F4511E;
+    border-radius: 2px;
+    font-weight: 600; 
+}
+
+.btn-pagination:hover{
+    background-color: #FE9A2E;
+    color: #fff;
+}
+
+.active{
+    color: #fff;
+    background-color: #F4511E;
+    border-color: #F4511E;
+    border-radius: 2px;
+}
+
+.active:hover{
+    color: #F88E6D;    
 }
 
 .transparentButton{

@@ -19,7 +19,7 @@ public class FrontControllerServlet extends HttpServlet {
             String commandPath = PACKAGE_NAME + request.getParameter(PARAMETER_NAME);
             try {
                 FrontCommand action1 = (FrontCommand) createCommandInstance(commandPath);
-                if (request.getParameter("pagination") != null){
+                if (request.getParameter(PARAMETER_PAGINATION) != null){
                     action1.modifyStringPaginationNumber(request.getParameter(PARAMETER_PAGINATION));
                 }
                 action1.init(getServletContext(), request, response);
