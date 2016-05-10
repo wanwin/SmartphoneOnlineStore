@@ -35,7 +35,7 @@
                 return productPrice - productPrice * productDiscount / 100;
             }
             
-            public void printProducts(ConcurrentHashMap<Product,Integer> products, JspWriter out) throws IOException{
+            public void printProducts(ConcurrentHashMap<Product,Integer> products, String productsString, JspWriter out) throws IOException{
                 for (Entry<Product,Integer> entry: products.entrySet()){
                     Product product = entry.getKey();
                     Integer quantity = entry.getValue();
@@ -53,11 +53,13 @@
                                     out.println("<form action=\"FrontControllerServlet\">");
                                     out.println("<input type=\"hidden\" name=\"command\" value=\"ModifyQuantityOfProduct\">");
                                     out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
+                                    out.println("<input type=\"hidden\" name=\"productDiscount\" value=" + product.getDiscount()+ ">");
                                     out.println("<input class=\"btn btn-incrementProduct position-relative\" name=\"incrementButton\" value=\"\" type=\"submit\">");
                                     out.println("</form>");
                                     out.println("<form action=\"FrontControllerServlet\">");
                                     out.println("<input type=\"hidden\" name=\"command\" value=\"ModifyQuantityOfProduct\">");
                                     out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
+                                    out.println("<input type=\"hidden\" name=\"productDiscount\" value=" + product.getDiscount()+ ">");
                                     out.println("<input class=\"btn btn-decrementProduct position-relative\" name=\"decrementButton\" value=\"\" type=\"submit\">");
                                     out.println("</form>");
                                 out.println("</td>");
@@ -66,6 +68,7 @@
                                     out.println("<form action=\"FrontControllerServlet\">");
                                     out.println("<input type=\"hidden\" name=\"command\" value=\"DelFromCartCommand\">");
                                     out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
+                                    out.println("<input type=\"hidden\" name=\"productDiscount\" value=" + product.getDiscount()+ ">");
                                     out.println("<input class=\"btn btn-delFromCart\" type=\"submit\" value=\"Eliminar del carrito\">");
                                     out.println("</form>");
                                 out.println("</td>");
@@ -110,8 +113,8 @@
                             out.println("</tr>");
                         out.println("</thead>");
                         out.println("<tbody>");
-                printProducts(products, out);
-                printProducts(products2, out);
+                printProducts(products, "products", out);
+                printProducts(products2, "product2", out);
                             out.println("<thead>");
                             out.println("<tr>");
                                 out.println("<th></th>");

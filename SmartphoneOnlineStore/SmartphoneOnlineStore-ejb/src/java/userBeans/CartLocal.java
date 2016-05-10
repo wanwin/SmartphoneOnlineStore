@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 public interface CartLocal {
     public float calculateTotal();
     public void addToCart(Product product);
-    public void delFromCart(Product product);
+    public void delFromCart(Product product, ConcurrentHashMap<Product,Integer> products);
     public void finishPurchase(HttpSession session);
     public ConcurrentHashMap<Product,Integer> getProducts();
     public ConcurrentHashMap<Product,Integer> getProducts2();

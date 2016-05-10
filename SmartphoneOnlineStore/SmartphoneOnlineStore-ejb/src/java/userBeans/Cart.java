@@ -38,7 +38,10 @@ public class Cart implements CartLocal {
                             products2.put(product, 1);    
                         }
                         //isProductWithDiscountInCart = true;
-                    }    
+                    } 
+                    else{
+                        products.put(product, products.get(product) + 1);
+                    }
                 }
             }
             /*if (isProductWithDiscountInCart){
@@ -79,7 +82,7 @@ public class Cart implements CartLocal {
     }
 
     @Override
-    public void delFromCart(Product product) {
+    public void delFromCart(Product product, ConcurrentHashMap<Product,Integer> products) {
         products.remove(product);
     }
 

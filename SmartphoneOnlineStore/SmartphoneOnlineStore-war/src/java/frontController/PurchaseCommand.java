@@ -42,6 +42,7 @@ public class PurchaseCommand extends FrontCommand{
             String address = encodeStringToUTF8(request.getParameter("address"));
             CartLocal cart = initCart();
             ConcurrentHashMap<Product, Integer> products = cart.getProducts();
+            ConcurrentHashMap<Product, Integer> products2 = cart.getProducts2();
             ProductFacadeLocal productFacade = (ProductFacadeLocal) InitialContext.doLookup(PRODUCT_JNDI_URL);
             for (Entry<Product,Integer> entry : products.entrySet()) {
                 Product product = entry.getKey();
@@ -61,8 +62,9 @@ public class PurchaseCommand extends FrontCommand{
             createCompanyHead("../../web/resources/img/logo_horizontal.png", 
                     "Movilazos SL", "B35.258.951", "Las Palmas de Gran Canaria", "928 928 928");
             createClientHead(name, surname, dni, tel, address);
-            createTable(3, products);
+            createTable(3, products, products2);
             products.clear();
+            products2.clear();
             closePDF();
             createPDFHeader();
             BrowserLauncher browserLauncher = new BrowserLauncher();
@@ -148,13 +150,14 @@ public class PurchaseCommand extends FrontCommand{
         
     }
     
-    private void createTable(int column, ConcurrentHashMap<Product, Integer> products) throws DocumentException{
+    private void createTable(int column, ConcurrentHashMap<Product, Integer> products, ConcurrentHashMap<Product, Integer> products2) 
+            throws DocumentException{
         DecimalFormat df = new DecimalFormat("0.00");
         PdfPTable productsTable = new PdfPTable(column);
         PdfPTable finalTable = new PdfPTable(2);
         double subtotal = 0, total = 0; 
         printHeadOfTableOfProducts(productsTable);
-        subtotal = printTableOfProducts(products, productsTable, subtotal);
+        subtotal = printTableOfProducts(products, products2, productsTable, subtotal);
         document.add(productsTable);
         addParagraph("--", Chunk.ALIGN_CENTER);
         total = subtotal + subtotal * 0.07;
@@ -191,7 +194,8 @@ public class PurchaseCommand extends FrontCommand{
         productsTable.addCell("Unidades");
     }
     
-    private double printTableOfProducts(ConcurrentHashMap<Product, Integer> products, PdfPTable productsTable, double subtotal) {
+    private double printTableOfProducts(ConcurrentHashMap<Product, Integer> products, ConcurrentHashMap<Product, Integer> products2, 
+            PdfPTable productsTable, double subtotal) {
         for (Entry<Product, Integer> entry : products.entrySet()) {
             Product product = entry.getKey();
             Integer quantity = entry.getValue();
@@ -201,7 +205,20 @@ public class PurchaseCommand extends FrontCommand{
                 productPrice = (productPrice - productPrice * productDiscount / 100) * quantity;
             }
             productsTable.addCell(product.getManufacturerId().getName() + " " + product.getDescription());
-            productsTable.addCell("" + product.getPurchaseCost().floatValue() + "");
+            productsTable.addCell("" + productPrice + "");
+            productsTable.addCell("" + quantity + "");
+            subtotal += productPrice;
+        }
+        for (Entry<Product, Integer> entry : products2.entrySet()) {
+            Product product = entry.getKey();
+            Integer quantity = entry.getValue();
+            Integer productDiscount = product.getDiscount();
+            Float productPrice = product.getPurchaseCost().floatValue() * quantity;  
+            if (productDiscount > 0){
+                productPrice = (productPrice - productPrice * productDiscount / 100) * quantity;
+            }
+            productsTable.addCell(product.getManufacturerId().getName() + " " + product.getDescription());
+            productsTable.addCell("" + productPrice + "");
             productsTable.addCell("" + quantity + "");
             subtotal += productPrice;
         }

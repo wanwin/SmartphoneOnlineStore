@@ -14,13 +14,23 @@ public class DelFromCartCommand extends FrontCommand{
     public void process(){
         try {
             String requestedProductId = request.getParameter("productId");
+            int requestedProductDiscount = Integer.parseInt(request.getParameter("productDiscount"));
             CartLocal cart = initCart();
             ConcurrentHashMap<Product,Integer> products = cart.getProducts();
+            ConcurrentHashMap<Product,Integer> products2 = cart.getProducts2();
             for (Map.Entry<Product,Integer> entry : products.entrySet()) {
                 Product product = entry.getKey();
                 Integer productId = Integer.parseInt(requestedProductId);
-                if (product.getProductId().equals(productId)){
-                    cart.delFromCart(product);
+                if (product.getProductId().equals(productId) && product.getDiscount() == requestedProductDiscount){
+                    cart.delFromCart(product, products);
+                    forward(CART_PATH);
+                }
+            }
+            for (Map.Entry<Product,Integer> entry : products2.entrySet()) {
+                Product product = entry.getKey();
+                Integer productId = Integer.parseInt(requestedProductId);
+                if (product.getProductId().equals(productId) && product.getDiscount() == requestedProductDiscount){
+                    cart.delFromCart(product, products2);
                     forward(CART_PATH);
                 }
             }
