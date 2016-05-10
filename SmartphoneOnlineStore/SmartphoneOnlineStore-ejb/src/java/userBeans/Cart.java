@@ -18,6 +18,7 @@ public class Cart implements CartLocal {
         return products;
     }
     
+    @Override
     public ConcurrentHashMap<Product, Integer> getProducts2() {
         return products2;
     }
@@ -25,7 +26,7 @@ public class Cart implements CartLocal {
     @Override
     public void addToCart(Product product) {
         if (products.containsKey(product)){
-            boolean isProductWithDiscountInCart = false;
+            //boolean isProductWithDiscountInCart = false;
             for (Entry<Product,Integer> entry : products.entrySet()) {
                 Product productInCart = entry.getKey();
                 if (productInCart.equals(product)){
@@ -36,13 +37,13 @@ public class Cart implements CartLocal {
                         else{
                             products2.put(product, 1);    
                         }
-                        isProductWithDiscountInCart = true;
+                        //isProductWithDiscountInCart = true;
                     }    
                 }
             }
-            if (isProductWithDiscountInCart){
+            /*if (isProductWithDiscountInCart){
                 products.put(product, products.get(product) + 1);
-            }
+            }*/
         }
         else{
             products.put(product, 1);
@@ -80,5 +81,17 @@ public class Cart implements CartLocal {
     @Override
     public void delFromCart(Product product) {
         products.remove(product);
+    }
+
+    @Override
+    public int getTotalOfProducts() {
+        int size = 0;
+        for (Entry<Product,Integer> entry: products.entrySet()){
+            size += entry.getValue();
+        }
+        for (Entry<Product,Integer> entry2: products2.entrySet()){
+            size += entry2.getValue();
+        }
+        return size;
     }
 }

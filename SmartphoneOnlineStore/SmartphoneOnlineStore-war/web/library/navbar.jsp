@@ -31,13 +31,8 @@
                                 out.println("<input id=\"cartButton0\" type=\"submit\" value=\"\">");
                             }else{
                                 ConcurrentHashMap<Product,Integer> products = cart.getProducts();
-                                Integer numberOfProductsInCart = 0; 
-                                for (Entry<Product,Integer> entry: products.entrySet()){
-                                    Integer quantity = entry.getValue();
-                                    numberOfProductsInCart += quantity;
-                                }
-                                if (numberOfProductsInCart <= 10){
-                                    out.println("<input id=\"cartButton" + numberOfProductsInCart + "\" type=\"submit\" value=\"\">");
+                                if (products.size() <= 10){
+                                    out.println("<input id=\"cartButton" + cart.getTotalOfProducts() + "\" type=\"submit\" value=\"\">");
                                 }else out.println("<input id=\"cartButton11\" type=\"submit\" value=\"\">");
                             }
                         %>

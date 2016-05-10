@@ -34,9 +34,6 @@
         <%
             TimerLocal timer = (TimerLocal) InitialContext.doLookup("java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/Timer!userBeans.TimerLocal");
             timer.establishDiscount();
-            /*Calendar calendar = new GregorianCalendar();
-            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-            out.println("dia de la semana: "+ dayOfWeek);*/
             StatisticsLocal statistics = getStatisticsSingleton(session, request);
             if (session.isNew()){
                 statistics.incrementNumberOfUsersConnected();
