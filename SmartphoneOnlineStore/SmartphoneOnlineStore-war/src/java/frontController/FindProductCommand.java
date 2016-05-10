@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 public class FindProductCommand extends FrontCommand{
 
     static String stringPage = null;
+    
     @Override
     public void process(){
         try {

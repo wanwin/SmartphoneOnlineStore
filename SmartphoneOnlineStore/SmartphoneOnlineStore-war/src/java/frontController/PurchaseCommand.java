@@ -64,22 +64,26 @@ public class PurchaseCommand extends FrontCommand{
             createTable(3, products);
             products.clear();
             closePDF();
-            response.setHeader("Expires", "0");
-            response.setHeader("Cache-Control",
-                    "must-revalidate, post-check=0, pre-check=0");
-            response.setHeader("Pragma", "public");
-            response.setHeader("content-disposition", "attachment; filename=\"Factura.pdf\"");
-            response.setContentType("application/pdf");
-            response.setContentLength(pdf.size());
-            OutputStream os = response.getOutputStream();
-            pdf.writeTo(os);
-            os.flush();
-            os.close();
+            createPDFHeader();
             BrowserLauncher browserLauncher = new BrowserLauncher();
             browserLauncher.openURLinBrowser("http://localhost:8080/SmartphoneOnlineStore-war/purchaseFinished.jsp");
         } 
         catch (NamingException | IOException | DocumentException | BrowserLaunchingInitializingException | UnsupportedOperatingSystemException ex) {
         }
+    }
+
+    private void createPDFHeader() throws IOException {
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-Control",
+                "must-revalidate, post-check=0, pre-check=0");
+        response.setHeader("Pragma", "public");
+        response.setHeader("content-disposition", "attachment; filename=\"Factura.pdf\"");
+        response.setContentType("application/pdf");
+        response.setContentLength(pdf.size());
+        OutputStream os = response.getOutputStream();
+        pdf.writeTo(os);
+        os.flush();
+        os.close();
     }
 
     private String encodeStringToUTF8(String str) {

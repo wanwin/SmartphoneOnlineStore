@@ -43,18 +43,18 @@
         <%!
             private void insertBrandsInDropdownList(List<Manufacturer> manufacturers, JspWriter out) throws IOException{
                 out.println("<li>");
-                        out.println("<form action=\"FrontControllerServlet\">");
-                            out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
-                            out.println("<input class=\"dropdownButton\" type=\"submit\" value=\"Todas\">");
-                        out.println("</form>");
-                    out.println("</li>");
+                    out.println("<form action=\"FrontControllerServlet\">");
+                        out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
+                        out.println("<input class=\"dropdownButton\" type=\"submit\" value=\"Todas\">");
+                    out.println("</form>");
+                out.println("</li>");
                 for (Manufacturer manufacturer: manufacturers){
                     //out.println("<li><a href=\"#\">" + manufacturer.getName() + "</a></li>");
                     out.println("<li>");
                         out.println("<form action=\"FrontControllerServlet\">");
                             out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
-                            out.println("<input type=\"hidden\" name=\"manufacturer\" value=" + manufacturer.getManufacturerId() + ">");
-                            out.println("<input class=\"dropdownButton\" type=\"submit\" value=" + manufacturer.getName() + ">");
+                            out.println("<input type=\"hidden\" name=\"manufacturer\" value=\"" + manufacturer.getManufacturerId() + "\">");
+                            out.println("<input class=\"dropdownButton\" type=\"submit\" value=\"" + manufacturer.getName() + "\">");
                         out.println("</form>");
                     out.println("</li>");
                 }
@@ -73,6 +73,7 @@
             List<Manufacturer> manufacturers = (List<Manufacturer>)request.getAttribute("Manufacturers");
             List<Product> products = (List<Product>)request.getAttribute("Products");
             List<Product> allProducts = new ArrayList<Product>();
+            int pageNumber = Integer.parseInt(request.getParameter("pagination"));
             ProductFacadeLocal productFacade = (ProductFacadeLocal) InitialContext.doLookup("java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ProductFacade!controller.ProductFacadeLocal");
             allProducts.addAll(productFacade.findAll());
             int numberOfProductsInThisRow = 0;
@@ -113,6 +114,7 @@
                                         out.println("<form action=\"FrontControllerServlet\">");
                                         out.println("<input type=\"hidden\" name=\"command\" value=\"AddToCartCommand\">");
                                         out.println("<input type=\"hidden\" name=\"productId\" value=" + product.getProductId() + ">");
+                                        out.println("<input type=\"hidden\" name=\"pagination\" value=\"" + pageNumber + "\">");
                                         out.println(obtainCssClassOfAddToCartButton(product));
                                         out.println("</form>");
                                     out.println("</div>");
@@ -131,8 +133,6 @@
             out.println("<table>");
                 out.println("<li>");
                 out.println("<tr>");
-            out.println("<div class=\"btn-group\">");    
-            int pageNumber = Integer.parseInt(request.getParameter("pagination"));
             for (int i = 0; i<quantityOfProducts; i=i+6){
                 out.println("<td>");
                     out.println("<form action=\"FrontControllerServlet\">");
@@ -148,12 +148,10 @@
                 out.println("</td>");
                 pages++;
             }
-            out.println("</div>");    
                 out.println("</tr>");
                 out.println("</li>");
             out.println("</table>");
             out.println("</ul></div>");
-            out.println("<p>" + pageNumber + "</p>");
         %>
         <div w3-include-HTML="library/footer.html"></div> 
         <%
