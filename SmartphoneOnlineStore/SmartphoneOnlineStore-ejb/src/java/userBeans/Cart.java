@@ -11,16 +11,38 @@ import javax.servlet.http.HttpSession;
 public class Cart implements CartLocal {
 
     private final ConcurrentHashMap<Product,Integer> products = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Product,Integer> products2 = new ConcurrentHashMap<>();
     
     @Override
     public ConcurrentHashMap<Product,Integer> getProducts() {
         return products;
     }
     
+    public ConcurrentHashMap<Product, Integer> getProducts2() {
+        return products2;
+    }
+    
     @Override
     public void addToCart(Product product) {
         if (products.containsKey(product)){
-            products.put(product, products.get(product) + 1);
+            boolean isProductWithDiscountInCart = false;
+            for (Entry<Product,Integer> entry : products.entrySet()) {
+                Product productInCart = entry.getKey();
+                if (productInCart.equals(product)){
+                    if (productInCart.getDiscount() != product.getDiscount()){
+                        if (products2.containsKey(product)){
+                            products2.put(product, products2.get(product) + 1);        
+                        }
+                        else{
+                            products2.put(product, 1);    
+                        }
+                        isProductWithDiscountInCart = true;
+                    }    
+                }
+            }
+            if (isProductWithDiscountInCart){
+                products.put(product, products.get(product) + 1);
+            }
         }
         else{
             products.put(product, 1);
@@ -29,6 +51,10 @@ public class Cart implements CartLocal {
     
     @Override
     public float calculateTotal() {
+        return calculateTotal(products) + calculateTotal(products2);
+    }
+
+    private float calculateTotal(ConcurrentHashMap<Product,Integer> products) {
         float sum = 0;
         for (Entry<Product,Integer> entry: products.entrySet()){
             Product product = entry.getKey();
@@ -44,7 +70,6 @@ public class Cart implements CartLocal {
         }
         return sum;
     }
-
 
     @Override
     @Remove

@@ -189,7 +189,7 @@ p{
 }
 
 .btn-pagination:hover{
-    background-color: #FE9A2E;
+    background-color: #F88E6D;
     color: #fff;
 }
 
@@ -201,7 +201,7 @@ p{
 }
 
 .active:hover{
-    color: #F88E6D;    
+    color: #F88E6D;
 }
 
 .transparentButton{

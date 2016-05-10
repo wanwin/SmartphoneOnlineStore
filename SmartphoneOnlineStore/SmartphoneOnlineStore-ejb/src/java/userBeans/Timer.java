@@ -13,29 +13,30 @@ public class Timer implements TimerLocal {
     
     boolean thereIsDiscount = false;
     
-    @Schedule(dayOfWeek = "Mon", hour = "*", minute = "*", second = "*")
+    @Schedule(hour = "*", minute = "*", second = "*/15")
     @Override
-    public void setDiscount(){
+    public void establishDiscount(){
         try {
+            int discount;
             if (thereIsDiscount){
-                ProductFacadeLocal productFacade = InitialContext.doLookup("java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ProductFacade!controller.ProductFacadeLocal");
-                List<Product> products = productFacade.findAll();
-                for (Product product : products) {
-                    product.setDiscount(30);
-                    productFacade.edit(product);
-                }        
+                discount = 30;
             }
             else{
-                ProductFacadeLocal productFacade = InitialContext.doLookup("java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ProductFacade!controller.ProductFacadeLocal");
-                List<Product> products = productFacade.findAll();
-                for (Product product : products) {
-                    product.setDiscount(0);
-                    productFacade.edit(product);
-                }        
+                discount = 0;
             }
-            thereIsDiscount = !thereIsDiscount;
+            setProductDiscount(discount);   
+            thereIsDiscount = !thereIsDiscount; 
         } 
         catch (NamingException ex) {
+        }
+    }
+
+    private void setProductDiscount(int discount) throws NamingException {
+        ProductFacadeLocal productFacade = InitialContext.doLookup("java:global/SmartphoneOnlineStore/SmartphoneOnlineStore-ejb/ProductFacade!controller.ProductFacadeLocal");
+        List<Product> products = productFacade.findAll();
+        for (Product product : products) {
+            product.setDiscount(discount);
+            productFacade.edit(product);
         }
     }
 }

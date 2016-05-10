@@ -12,6 +12,7 @@ public interface CartLocal {
     public void delFromCart(Product product);
     public void finishPurchase(HttpSession session);
     public ConcurrentHashMap<Product,Integer> getProducts();
+    public ConcurrentHashMap<Product,Integer> getProducts2();
 }
 
 

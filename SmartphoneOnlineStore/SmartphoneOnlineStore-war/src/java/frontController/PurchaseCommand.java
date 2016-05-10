@@ -195,12 +195,15 @@ public class PurchaseCommand extends FrontCommand{
         for (Entry<Product, Integer> entry : products.entrySet()) {
             Product product = entry.getKey();
             Integer quantity = entry.getValue();
+            Integer productDiscount = product.getDiscount();
+            Float productPrice = product.getPurchaseCost().floatValue() * quantity;  
+            if (productDiscount > 0){
+                productPrice = (productPrice - productPrice * productDiscount / 100) * quantity;
+            }
             productsTable.addCell(product.getManufacturerId().getName() + " " + product.getDescription());
             productsTable.addCell("" + product.getPurchaseCost().floatValue() + "");
             productsTable.addCell("" + quantity + "");
-            if (quantity > 1){
-                subtotal += product.getPurchaseCost().floatValue() * quantity;
-            }else subtotal += product.getPurchaseCost().floatValue();
+            subtotal += productPrice;
         }
         return subtotal;
     }
@@ -208,10 +211,10 @@ public class PurchaseCommand extends FrontCommand{
 
     private void printFinalTable(PdfPTable finalTable, double subtotal, DecimalFormat df, double total) {
         finalTable.addCell("Subtotal");
-        finalTable.addCell("" + subtotal + "");
+        finalTable.addCell("" + df.format(subtotal) + "");
         finalTable.addCell("IGIC");
         finalTable.addCell("" + df.format(subtotal * 0.07) + "");
         finalTable.addCell("Total");
-        finalTable.addCell("" + total + "");
+        finalTable.addCell("" + df.format(total) + "");
     }
 }

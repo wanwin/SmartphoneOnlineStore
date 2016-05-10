@@ -1,3 +1,4 @@
+<%@page import="java.io.IOException"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.concurrent.ConcurrentHashMap"%>
 <%@page import="java.util.Map.Entry"%>
@@ -33,43 +34,8 @@
                 Integer productDiscount = product.getDiscount();
                 return productPrice - productPrice * productDiscount / 100;
             }
-        %> 
-        <div w3-include-HTML="library/navbar.jsp"></div>
-        <%
-            CartLocal cart = (CartLocal) session.getAttribute("cart");
-            DecimalFormat df = new DecimalFormat("0.00");
-            boolean areThereAnyErrors = false;
-            if (cart == null || cart.getProducts().isEmpty()){
-                out.println("<div class=\"text-center bg-warning alert-warning\"><h1>El carrito se encuentra vacío.</h1></div>");
-                out.println("<form class=\"text-center\" action=\"FrontControllerServlet\">");
-                out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
-                out.println("<input type=\"hidden\" name=\"pagination\" value=\"1\">");
-                out.println("<input class=\"btn btn-continueShopping\" type=\"submit\" value=\"Seguir Comprando\">");
-                out.println("</form><br>");
-            }
-            else{
-                ConcurrentHashMap<Product,Integer> products = cart.getProducts();
-                out.println("<div class=\"container\">");
-                    out.println("<h2>Productos añadidos al carrito</h2>");
-                    for (Entry<Product,Integer> entry: products.entrySet()){
-                        Product product = entry.getKey();
-                        Integer quantity = entry.getValue();
-                        if(quantity > product.getQuantityOnHand()){
-                            areThereAnyErrors = true;
-                            out.println("<div class=\"text-center bg-danger alert-danger\"><h2>No hay unidades suficientes para el producto " + product.getManufacturerId().getName()+ " " + product.getDescription() + "</h2></div>");
-                        }
-                    }
-                    out.println("<table class=\"table table-hover table-vcenter table-striped text-center table-condensed\">");
-                        out.println("<thead>");
-                            out.println("<tr>");
-                                out.println("<th>IMAGEN</th>");
-                                out.println("<th>PRODUCTO</th>");
-                                out.println("<th>PRECIO (€)</th>");
-                                out.println("<th colspan=\"\">CANTIDAD</th>");
-                                out.println("<th>¿ELIMINAR?</th>");
-                            out.println("</tr>");
-                        out.println("</thead>");
-                        out.println("<tbody>");
+            
+            public void printProducts(ConcurrentHashMap<Product,Integer> products, JspWriter out) throws IOException{
                 for (Entry<Product,Integer> entry: products.entrySet()){
                     Product product = entry.getKey();
                     Integer quantity = entry.getValue();
@@ -104,7 +70,48 @@
                                     out.println("</form>");
                                 out.println("</td>");
                             out.println("</tr>");
-                }
+                }    
+            }
+        %> 
+        <div w3-include-HTML="library/navbar.jsp"></div>
+        <%
+            CartLocal cart = (CartLocal) session.getAttribute("cart");
+            DecimalFormat df = new DecimalFormat("0.00");
+            boolean areThereAnyErrors = false;
+            if (cart == null || cart.getProducts().isEmpty()){
+                out.println("<div class=\"text-center bg-warning alert-warning\"><h1>El carrito se encuentra vacío.</h1></div>");
+                out.println("<form class=\"text-center\" action=\"FrontControllerServlet\">");
+                out.println("<input type=\"hidden\" name=\"command\" value=\"FindProductCommand\">");
+                out.println("<input type=\"hidden\" name=\"pagination\" value=\"1\">");
+                out.println("<input class=\"btn btn-continueShopping\" type=\"submit\" value=\"Seguir Comprando\">");
+                out.println("</form><br>");
+            }
+            else{
+                ConcurrentHashMap<Product,Integer> products = cart.getProducts();
+                ConcurrentHashMap<Product,Integer> products2 = cart.getProducts2();
+                out.println("<div class=\"container\">");
+                    out.println("<h2>Productos añadidos al carrito</h2>");
+                    for (Entry<Product,Integer> entry: products.entrySet()){
+                        Product product = entry.getKey();
+                        Integer quantity = entry.getValue();
+                        if(quantity > product.getQuantityOnHand()){
+                            areThereAnyErrors = true;
+                            out.println("<div class=\"text-center bg-danger alert-danger\"><h2>No hay unidades suficientes para el producto " + product.getManufacturerId().getName()+ " " + product.getDescription() + "</h2></div>");
+                        }
+                    }
+                    out.println("<table class=\"table table-hover table-vcenter table-striped text-center table-condensed\">");
+                        out.println("<thead>");
+                            out.println("<tr>");
+                                out.println("<th>IMAGEN</th>");
+                                out.println("<th>PRODUCTO</th>");
+                                out.println("<th>PRECIO (€)</th>");
+                                out.println("<th colspan=\"\">CANTIDAD</th>");
+                                out.println("<th>¿ELIMINAR?</th>");
+                            out.println("</tr>");
+                        out.println("</thead>");
+                        out.println("<tbody>");
+                printProducts(products, out);
+                printProducts(products2, out);
                             out.println("<thead>");
                             out.println("<tr>");
                                 out.println("<th></th>");
